@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GestionInventarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Operacion_Rol">
+    <Key>
+      <PropertyRef Name="CodigoRol" />
+      <PropertyRef Name="CodigoOperacion" />
+    </Key>
+    <Property Name="CodigoRol" Type="int" Nullable="false" />
+    <Property Name="CodigoOperacion" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Operaciones">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="CodigoModulo" Type="int" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Run" Type="varchar" MaxLength="30" StoreGeneratedPattern="Computed" />
+    <Property Name="RunCuerpo" Type="int" Nullable="false" />
+    <Property Name="RunDigito" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="95" StoreGeneratedPattern="Computed" />
+    <Property Name="Nombres" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="ApellidoPaterno" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ApellidoMaterno" Type="varchar" MaxLength="25" />
+    <Property Name="Email" Type="varchar" MaxLength="256" />
+    <Property Name="SexoCodigo" Type="smallint" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="date" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Sexo">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Letra" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="150" />
+    <Property Name="Activo" Type="bit" />
+  </EntityType>
+  <EntityType Name="Usuario_Rol">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="CodigoRol" />
+    </Key>
+    <Property Name="IdUsuario" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CodigoRol" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Operacion_Rol_Operaciones">
+    <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="1" />
+    <End Role="Operacion_Rol" Type="Self.Operacion_Rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operaciones">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Operacion_Rol">
+        <PropertyRef Name="CodigoOperacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operacion_Rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Operacion_Rol" Type="Self.Operacion_Rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Operacion_Rol">
+        <PropertyRef Name="CodigoRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operaciones_Modulo">
+    <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+    <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Operaciones">
+        <PropertyRef Name="CodigoModulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_Sexo">
+    <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sexo">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="SexoCodigo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario_Rol" Type="Self.Usuario_Rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Usuario_Rol">
+        <PropertyRef Name="CodigoRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Usuario_Rol" Type="Self.Usuario_Rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario_Rol">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="GestionInventarioModelStoreContainer">
+    <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Operacion_Rol" EntityType="Self.Operacion_Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario_Rol" EntityType="Self.Usuario_Rol" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Operacion_Rol_Operaciones" Association="Self.FK_Operacion_Rol_Operaciones">
+      <End Role="Operaciones" EntitySet="Operaciones" />
+      <End Role="Operacion_Rol" EntitySet="Operacion_Rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operacion_Rol_Rol" Association="Self.FK_Operacion_Rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Operacion_Rol" EntitySet="Operacion_Rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operaciones_Modulo" Association="Self.FK_Operaciones_Modulo">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="Operaciones" EntitySet="Operaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_Sexo" Association="Self.FK_Persona_Sexo">
+      <End Role="Sexo" EntitySet="Sexo" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol_Rol" Association="Self.FK_Usuario_Rol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario_Rol" EntitySet="Usuario_Rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol_Usuario" Association="Self.FK_Usuario_Rol_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Usuario_Rol" EntitySet="Usuario_Rol" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

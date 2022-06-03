@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="306706b243ea4c8fa0ce2db7a9a60115" Name="Diagram1">
+        <EntityTypeShape EntityType="GestionInventarioModel.Persona" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Sexo" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionInventarioModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Usuario" Width="1.5" PointX="6.125" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="GestionInventarioModel.FK_Persona_Sexo" ManuallyRouted="false" />
+        <AssociationConnector Association="GestionInventarioModel.FK_Usuario_Persona" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Modulo" Width="1.5" PointX="5.375" PointY="8" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Operaciones" Width="1.5" PointX="5.25" PointY="4.75" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Rol" Width="1.5" PointX="9.5" PointY="3.25" />
+        <AssociationConnector Association="GestionInventarioModel.FK_Operaciones_Modulo" />
+        <AssociationConnector Association="GestionInventarioModel.Operacion_Rol" />
+        <AssociationConnector Association="GestionInventarioModel.Usuario_Rol" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

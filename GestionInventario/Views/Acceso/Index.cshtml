@@ -1,0 +1,52 @@
+﻿@model GestionInventario.Models.View.LoginView
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<h2>Gestion Inventario</h2>
+
+<div class="row">
+    @using (Html.BeginForm("Login", "Acceso", FormMethod.Post, new { id = "FormLogin", role = "form" }))
+    {
+        <div>
+            @Html.LabelFor(x=>x.Email)
+            <div>@Html.TextBoxFor(x => x.Email, new { @class = "from-control"}) </div>
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Pass)
+            <div>@Html.PasswordFor(x => x.Pass, new { @class = "from-control" }) </div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Entrar" />
+    }
+
+
+</div>
+@section scripts
+{
+
+    <script>
+    $(document).ready(function ()
+    {
+        console.log("Ayuda")
+        $("#FormLogin").submit(function (e) {
+            e.preventDefault();
+            url = "@Url.Content("~/Acceso/Login")"
+            parametros = $(this).serialize();
+            $.post(url, parametros, function (response) {
+               
+                if (response.Error == true) {
+                    confirm(response.Mensaje)
+                }
+                else {                    
+                    document.location.href = "@Url.Content("~/")"
+                }
+            })
+        });
+    });
+
+
+    </script>
+
+
+}

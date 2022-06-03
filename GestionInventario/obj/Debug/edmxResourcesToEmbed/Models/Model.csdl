@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GestionInventarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Run" Type="String" MaxLength="30" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="RunCuerpo" Type="Int32" Nullable="false" />
+    <Property Name="RunDigito" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="95" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Nombres" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApellidoPaterno" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApellidoMaterno" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SexoCodigo" Type="Int16" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Sexo" Relationship="Self.FK_Persona_Sexo" FromRole="Persona" ToRole="Sexo" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Persona" FromRole="Persona" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Sexo">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Letra" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_Sexo" FromRole="Sexo" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Activo" Type="Boolean" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Usuario_Persona" FromRole="Usuario" ToRole="Persona" />
+    <NavigationProperty Name="Rol" Relationship="GestionInventarioModel.Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+  </EntityType>
+  <Association Name="FK_Persona_Sexo">
+    <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sexo">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="SexoCodigo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GestionInventarioEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Persona" EntityType="Self.Persona" />
+    <EntitySet Name="Sexo" EntityType="Self.Sexo" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Persona_Sexo" Association="Self.FK_Persona_Sexo">
+      <End Role="Sexo" EntitySet="Sexo" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(GestionInventarioModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(GestionInventarioModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="Modulo" EntityType="GestionInventarioModel.Modulo" />
+    <EntitySet Name="Operaciones" EntityType="GestionInventarioModel.Operaciones" />
+    <EntitySet Name="Rol" EntityType="GestionInventarioModel.Rol" />
+    <AssociationSet Name="FK_Operaciones_Modulo" Association="GestionInventarioModel.FK_Operaciones_Modulo">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="Operaciones" EntitySet="Operaciones" />
+    </AssociationSet>
+    <AssociationSet Name="Operacion_Rol" Association="GestionInventarioModel.Operacion_Rol">
+      <End Role="Operaciones" EntitySet="Operaciones" />
+      <End Role="Rol" EntitySet="Rol" />
+    </AssociationSet>
+    <AssociationSet Name="Usuario_Rol" Association="GestionInventarioModel.Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Operaciones" Relationship="GestionInventarioModel.FK_Operaciones_Modulo" FromRole="Modulo" ToRole="Operaciones" />
+  </EntityType>
+  <EntityType Name="Operaciones">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CodigoModulo" Type="Int32" />
+    <NavigationProperty Name="Modulo" Relationship="GestionInventarioModel.FK_Operaciones_Modulo" FromRole="Operaciones" ToRole="Modulo" />
+    <NavigationProperty Name="Rol" Relationship="GestionInventarioModel.Operacion_Rol" FromRole="Operaciones" ToRole="Rol" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Operaciones" Relationship="GestionInventarioModel.Operacion_Rol" FromRole="Rol" ToRole="Operaciones" />
+    <NavigationProperty Name="Usuario" Relationship="GestionInventarioModel.Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK_Operaciones_Modulo">
+    <End Type="GestionInventarioModel.Modulo" Role="Modulo" Multiplicity="0..1" />
+    <End Type="GestionInventarioModel.Operaciones" Role="Operaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Operaciones">
+        <PropertyRef Name="CodigoModulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Operacion_Rol">
+    <End Type="GestionInventarioModel.Operaciones" Role="Operaciones" Multiplicity="*" />
+    <End Type="GestionInventarioModel.Rol" Role="Rol" Multiplicity="*" />
+  </Association>
+  <Association Name="Usuario_Rol">
+    <End Type="GestionInventarioModel.Rol" Role="Rol" Multiplicity="*" />
+    <End Type="GestionInventarioModel.Usuario" Role="Usuario" Multiplicity="*" />
+  </Association>
+</Schema>
