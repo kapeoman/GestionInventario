@@ -52,6 +52,31 @@ namespace GestionInventario.Models.Repository
             }
         }
 
+        public ResponseModel ReactivarInventario(int Codigo)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    Inventario inventario = db.Inventario.Where(x => x.Codigo == Codigo).SingleOrDefault();
+                    inventario.Eliminado = false;
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+
+                    response.Error = false;
+                    response.Mensaje = "Se ha Reactivado correctamente";
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Mensaje = "Se ha producido un error" + ex.Message;
+                return response;
+            }
+        }
+
         public ResponseModel EditarInventario(Inventario inventarioNew)
         {
             ResponseModel response = new ResponseModel();

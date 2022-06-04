@@ -33,5 +33,17 @@ namespace GestionInventario.Controllers
             var response = metodoInventario.EditarInventario(inventario);
             return Json(response);
         }
+        [HttpPost]
+        public ActionResult Delete(int Codigo)
+        {
+            var response = metodoInventario.EliminarInventario(Codigo);
+            return Json(response);
+        }
+        [HttpPost]
+        public ActionResult Activar(int Codigo)
+        {
+            var response = metodoInventario.ReactivarInventario(Codigo);
+            return Json(response);
+        }
     }
 }

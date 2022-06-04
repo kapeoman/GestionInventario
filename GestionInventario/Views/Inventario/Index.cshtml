@@ -100,14 +100,14 @@
                 @Html.DisplayFor(modelItem => itemInactivo.Producto.precioUnitario)
             </td>
             <td>
-                <a id="btnEditCaso" onclick="editar(@itemInactivo.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                <a id="btnEditCaso" onclick="activar(@itemInactivo.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Activar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-edit fa-2x"> </span>
                 </a>
-                <a id="btnDelete" onclick="eliminar(@itemInactivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                @*<a id="btnDelete" onclick="eliminar(@itemInactivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-trash fa-2x"> </span>
-                </a>
+                </a>*@
 
                 @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
                        data-placement="left" data-toggle="tooltip" data-original-title="">
@@ -149,12 +149,16 @@
             });
         }
 
-
-        function eliminar(Id) {
-            if (confirm("Esta seguro que desea eliminar???")) {
-                var url = "@Url.Content("~/Producto/Delete")" + "/" + Id;
-                $.post(url, function (response) {
-                    if (response.Error == true) {
+        function activar(Codigo) {
+            @*console.log(Codigo)
+            document.location.href = "@Url.Content("~/Inventario/Edit")" + "/" + Codigo;*@
+            var url = '@Url.Action("Activar", "Inventario")';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {Codigo: Codigo},
+                success: function (response) {
+                   if (response.Error == true) {
                         setTimeout(bajaModal, 1000);
                         setTimeout(carga, 4000);
 
@@ -179,10 +183,60 @@
                         }
                         function carga() {
                             //$('#cargarMensajes').modal('hide');
-                            document.location.href = "@Url.Action("Index","Usuario")";
+                            document.location.href = "@Url.Action("Index","Inventario")";
                         }
 
 
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        }
+
+
+        function eliminar(Codigo) {
+            if (confirm("Esta seguro que desea eliminar el inventario???")) {
+               var url = '@Url.Action("Delete","Inventario")';
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { Codigo: Codigo },
+                    success: function (response) {
+                        if (response.Error == true) {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatosBarra").modal('hide');
+                        }
+                        function carga() {
+                            $('#cargarMensajes').modal('hide');
+                        }
+
+                    }
+                    else {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+                        //setTimeout(redireccionar, 1000)
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatos").modal('hide');
+                        }
+                        function carga() {
+                            //$('#cargarMensajes').modal('hide');
+                            document.location.href = "@Url.Action("Index","Inventario")";
+                        }
+
+
+                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError);
                     }
                 });
 
