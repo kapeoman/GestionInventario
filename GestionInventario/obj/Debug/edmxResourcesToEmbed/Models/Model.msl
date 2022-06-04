@@ -113,17 +113,6 @@
         <ScalarProperty Name="Codigo" ColumnName="CodigoRol" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Producto">
-      <EntityTypeMapping TypeName="GestionInventarioModel.Producto">
-        <MappingFragment StoreEntitySet="Producto">
-          <ScalarProperty Name="maximo" ColumnName="maximo" />
-          <ScalarProperty Name="minimo" ColumnName="minimo" />
-          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Inventario">
       <EntityTypeMapping TypeName="GestionInventarioModel.Inventario">
         <MappingFragment StoreEntitySet="Inventario">
@@ -144,6 +133,18 @@
           <ScalarProperty Name="StockAnterior" ColumnName="StockAnterior" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
           <ScalarProperty Name="CodigoInventario" ColumnName="CodigoInventario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Producto">
+      <EntityTypeMapping TypeName="GestionInventarioModel.Producto">
+        <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+          <ScalarProperty Name="maximo" ColumnName="maximo" />
+          <ScalarProperty Name="minimo" ColumnName="minimo" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -75,6 +75,7 @@
           <Property Name="precioUnitario" Type="int" />
           <Property Name="minimo" Type="int" />
           <Property Name="maximo" Type="int" />
+          <Property Name="Eliminado" Type="bit" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -458,13 +459,8 @@
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <EntitySet Name="Producto" EntityType="GestionInventarioModel.Producto" />
           <EntitySet Name="Inventario" EntityType="GestionInventarioModel.Inventario" />
           <EntitySet Name="InventarioHistorico" EntityType="GestionInventarioModel.InventarioHistorico" />
-          <AssociationSet Name="FK_Inventario_Producto" Association="GestionInventarioModel.FK_Inventario_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Inventario" EntitySet="Inventario" />
-          </AssociationSet>
           <AssociationSet Name="FK_InventarioHistorico_Inventario" Association="GestionInventarioModel.FK_InventarioHistorico_Inventario">
             <End Role="Inventario" EntitySet="Inventario" />
             <End Role="InventarioHistorico" EntitySet="InventarioHistorico" />
@@ -472,6 +468,11 @@
           <AssociationSet Name="FK_InventarioHistorico_Usuario" Association="GestionInventarioModel.FK_InventarioHistorico_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="InventarioHistorico" EntitySet="InventarioHistorico" />
+          </AssociationSet>
+          <EntitySet Name="Producto" EntityType="GestionInventarioModel.Producto" />
+          <AssociationSet Name="FK_Inventario_Producto" Association="GestionInventarioModel.FK_Inventario_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Inventario" EntitySet="Inventario" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -532,17 +533,6 @@
           <End Type="GestionInventarioModel.Rol" Role="Rol" Multiplicity="*" />
           <End Type="GestionInventarioModel.Usuario" Role="Usuario" Multiplicity="*" />
         </Association>
-        <EntityType Name="Producto">
-          <Key>
-            <PropertyRef Name="Codigo" />
-          </Key>
-          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="precioUnitario" Type="Int32" />
-          <Property Name="minimo" Type="Int32" />
-          <Property Name="maximo" Type="Int32" />
-          <NavigationProperty Name="Inventario" Relationship="GestionInventarioModel.FK_Inventario_Producto" FromRole="Producto" ToRole="Inventario" />
-        </EntityType>
         <EntityType Name="Inventario">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -551,8 +541,8 @@
           <Property Name="CodigoProducto" Type="Int32" Nullable="false" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
           <Property Name="Eliminado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="GestionInventarioModel.FK_Inventario_Producto" FromRole="Inventario" ToRole="Producto" />
           <NavigationProperty Name="InventarioHistorico" Relationship="GestionInventarioModel.FK_InventarioHistorico_Inventario" FromRole="Inventario" ToRole="InventarioHistorico" />
+          <NavigationProperty Name="Producto" Relationship="GestionInventarioModel.FK_Inventario_Producto" FromRole="Inventario" ToRole="Producto" />
         </EntityType>
         <EntityType Name="InventarioHistorico">
           <Key>
@@ -569,18 +559,6 @@
           <NavigationProperty Name="Inventario" Relationship="GestionInventarioModel.FK_InventarioHistorico_Inventario" FromRole="InventarioHistorico" ToRole="Inventario" />
           <NavigationProperty Name="Usuario" Relationship="GestionInventarioModel.FK_InventarioHistorico_Usuario" FromRole="InventarioHistorico" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_Inventario_Producto">
-          <End Type="GestionInventarioModel.Producto" Role="Producto" Multiplicity="1" />
-          <End Type="GestionInventarioModel.Inventario" Role="Inventario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Inventario">
-              <PropertyRef Name="CodigoProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InventarioHistorico_Inventario">
           <End Type="GestionInventarioModel.Inventario" Role="Inventario" Multiplicity="1" />
           <End Type="GestionInventarioModel.InventarioHistorico" Role="InventarioHistorico" Multiplicity="*" />
@@ -602,6 +580,30 @@
             </Principal>
             <Dependent Role="InventarioHistorico">
               <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="precioUnitario" Type="Int32" />
+          <Property Name="minimo" Type="Int32" />
+          <Property Name="maximo" Type="Int32" />
+          <Property Name="Eliminado" Type="Boolean" />
+          <NavigationProperty Name="Inventario" Relationship="GestionInventarioModel.FK_Inventario_Producto" FromRole="Producto" ToRole="Inventario" />
+        </EntityType>
+        <Association Name="FK_Inventario_Producto">
+          <End Type="GestionInventarioModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="GestionInventarioModel.Inventario" Role="Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="CodigoProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -723,17 +725,6 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoRol" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Producto">
-            <EntityTypeMapping TypeName="GestionInventarioModel.Producto">
-              <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="maximo" ColumnName="maximo" />
-                <ScalarProperty Name="minimo" ColumnName="minimo" />
-                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Inventario">
             <EntityTypeMapping TypeName="GestionInventarioModel.Inventario">
               <MappingFragment StoreEntitySet="Inventario">
@@ -754,6 +745,18 @@
                 <ScalarProperty Name="StockAnterior" ColumnName="StockAnterior" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoInventario" ColumnName="CodigoInventario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="GestionInventarioModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+                <ScalarProperty Name="maximo" ColumnName="maximo" />
+                <ScalarProperty Name="minimo" ColumnName="minimo" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

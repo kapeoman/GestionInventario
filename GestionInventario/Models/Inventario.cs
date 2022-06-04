@@ -25,8 +25,8 @@ namespace GestionInventario.Models
         public int Stock { get; set; }
         public bool Eliminado { get; set; }
     
-        public virtual Producto Producto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InventarioHistorico> InventarioHistorico { get; set; }
+        public virtual Producto Producto { get; set; }
     }
 }

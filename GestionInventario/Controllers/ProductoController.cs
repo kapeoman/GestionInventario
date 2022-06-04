@@ -15,7 +15,13 @@ namespace GestionInventario.Controllers
         public ActionResult Index()
         {
 
-            return View(metodoProducto.ListaProductos());
+            return View(metodoProducto.ListaProductos(false));
+        }
+
+        public ActionResult IndexProductoEliminado()
+        {
+
+            return View(metodoProducto.ListaProductos(true));
         }
 
         public ActionResult Add()
@@ -28,6 +34,24 @@ namespace GestionInventario.Controllers
         {
             var response = metodoProducto.Add(producto);
 
+            return Json(response);
+        }
+
+        public ActionResult Edit(int codigo)
+        {
+            Producto producto = metodoProducto.GetProducto(codigo);
+            return PartialView("_Edit",producto);
+        }
+        [HttpPost]
+        public ActionResult Edit(Producto producto)
+        {
+            var response = metodoProducto.Edit(producto);
+            return Json(response);
+        }
+        [HttpPost]
+        public ActionResult Delete(int codigo, int Activo)
+        {
+            var response = metodoProducto.Delete(codigo, Activo);
             return Json(response);
         }
     }

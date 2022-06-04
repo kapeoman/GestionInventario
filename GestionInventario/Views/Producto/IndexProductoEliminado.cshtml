@@ -1,13 +1,13 @@
 ﻿@model List<GestionInventario.Models.Producto>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexProductoEliminado";
 }
 
-<h2>Index</h2>
+<h2>Index Producto Eliminado</h2>
 
 @ViewBag.Mensaje
 
-<button type="button" class="btn btn-success"><a href="@Url.Content("~/Producto/Add")">Ingresar Producto</a></button>
+@*<button type="button" class="btn btn-success"><a href="@Url.Content("~/Producto/Add")">Ingresar Producto</a></button>*@
 
 <table class="table">
     <tr>
@@ -39,11 +39,11 @@
                 @Html.DisplayFor(modelItem => item.precioUnitario)
             </td>
             <td>
-                <a id="btnEditProducto" onclick="editar(@item.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                @*<a id="btnEditProducto" onclick="editar(@item.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-edit fa-2x"> </span>
-                </a>
-                <a id="btnDeleteProducto" onclick="eliminar(@item.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                </a>*@
+                <a id="btnDeleteProducto" onclick="eliminar(@item.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Habilitar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-trash fa-2x"> </span>
                 </a>
@@ -89,9 +89,9 @@
 
 
         function eliminar(Codigo) {
-            if (confirm("Esta seguro que desea eliminar???")) {
-                var Activo = 2;
+            if (confirm("Esta seguro que desea habilitar el producto???")) {
                 var url = '@Url.Action("Delete","Producto")';
+                var Activo = 1;
                 $.ajax({
                     type: 'POST',
                     url: url,

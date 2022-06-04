@@ -70,6 +70,7 @@
     <Property Name="precioUnitario" Type="int" />
     <Property Name="minimo" Type="int" />
     <Property Name="maximo" Type="int" />
+    <Property Name="Eliminado" Type="bit" />
   </EntityType>
   <EntityType Name="Rol">
     <Key>

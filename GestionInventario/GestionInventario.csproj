@@ -262,6 +262,8 @@
     <Content Include="Views\Producto\Add.cshtml" />
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Inventario\Edit.cshtml" />
+    <Content Include="Views\Producto\_Edit.cshtml" />
+    <Content Include="Views\Producto\IndexProductoEliminado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

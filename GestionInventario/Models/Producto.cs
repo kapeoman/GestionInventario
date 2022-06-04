@@ -25,6 +25,7 @@ namespace GestionInventario.Models
         public Nullable<int> precioUnitario { get; set; }
         public Nullable<int> minimo { get; set; }
         public Nullable<int> maximo { get; set; }
+        public Nullable<bool> Eliminado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventario> Inventario { get; set; }

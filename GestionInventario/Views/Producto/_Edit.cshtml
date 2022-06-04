@@ -1,0 +1,97 @@
+﻿@model GestionInventario.Models.Producto
+<div class="modal-dialog">
+    <div class="modal-content">
+        @using (Html.BeginForm("Edit", "Producto", FormMethod.Post, new { id = "Producto", role = "form" }))
+        {
+            @Html.HiddenFor(x=>x.Codigo)
+        <div class="modal-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.precioUnitario, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.precioUnitario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.precioUnitario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.minimo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.minimo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.minimo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.maximo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.maximo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.maximo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div><div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" id="btnModificarProducto" class="btn btn-danger"><i class="fa fa-check"></i> GUARDAR <span class="glyphicon glyphicon-arrow-right"></span></button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function ()
+    {
+       
+        $("#btnModificarProducto").click(function (e) {
+            $("#cargaDatosBarra").modal('show');
+            e.preventDefault();
+            console.log("despues del prevent")
+            url = "@Url.Action("Edit", "Producto")"
+            parametros = $("#Producto").serialize();
+            $.post(url, parametros, function (response) {
+                if (response.Error) {
+                    console.log("entro al if")
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatosBarra").modal('hide');
+                    }
+                    function carga() {
+                        $('#cargarMensajes').modal('hide');
+                    }
+                    @*document.location.href = "@Url.Action("Add","Usuario")"*@
+                }
+                else {
+                    console.log("entro al else")
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+                    //setTimeout(redireccionar, 1000)
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatos").modal('hide');
+                    }
+                    function carga() {
+                        $("#modificarProducto").modal('hide');
+                        document.location.href = "@Url.Action("Index","Producto")"
+                    }
+
+
+                }
+            })
+        });
+    });
+
+</script>

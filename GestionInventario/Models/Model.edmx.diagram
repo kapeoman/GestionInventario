@@ -17,12 +17,12 @@
         <AssociationConnector Association="GestionInventarioModel.FK_Operaciones_Modulo" />
         <AssociationConnector Association="GestionInventarioModel.Operacion_Rol" />
         <AssociationConnector Association="GestionInventarioModel.Usuario_Rol" />
-        <EntityTypeShape EntityType="GestionInventarioModel.Producto" Width="1.5" PointX="7" PointY="9.875" />
         <EntityTypeShape EntityType="GestionInventarioModel.Inventario" Width="1.5" PointX="10.625" PointY="10" />
         <EntityTypeShape EntityType="GestionInventarioModel.InventarioHistorico" Width="1.5" PointX="13.625" PointY="9.125" />
-        <AssociationConnector Association="GestionInventarioModel.FK_Inventario_Producto" />
         <AssociationConnector Association="GestionInventarioModel.FK_InventarioHistorico_Inventario" />
         <AssociationConnector Association="GestionInventarioModel.FK_InventarioHistorico_Usuario" />
+        <EntityTypeShape EntityType="GestionInventarioModel.Producto" Width="1.5" PointX="8.375" PointY="9.875" />
+        <AssociationConnector Association="GestionInventarioModel.FK_Inventario_Producto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
