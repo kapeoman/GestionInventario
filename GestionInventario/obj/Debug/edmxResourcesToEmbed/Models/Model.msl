@@ -41,6 +41,7 @@
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="GestionInventarioModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="PassModificada" ColumnName="PassModificada" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Activo" ColumnName="Activo" />
@@ -112,5 +113,16 @@
         <ScalarProperty Name="Codigo" ColumnName="CodigoRol" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Producto">
+      <EntityTypeMapping TypeName="GestionInventarioModel.Producto">
+        <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="maximo" ColumnName="maximo" />
+          <ScalarProperty Name="minimo" ColumnName="minimo" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

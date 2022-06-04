@@ -1,4 +1,4 @@
-﻿@model List<GestionInventario.Models.View.UsuarioView>
+﻿@model List<GestionInventario.Models.Producto>
 @{
     ViewBag.Title = "Index";
 }
@@ -7,19 +7,19 @@
 
 @ViewBag.Mensaje
 
-<button type="button" class="btn btn-success"><a href="@Url.Content("~/Usuario/Add")">Ingresar Usuario</a></button>
+<button type="button" class="btn btn-success"><a href="@Url.Content("~/Producto/Add")">Ingresar Producto</a></button>
 
 <table class="table">
     <tr>
         <th>
-            Rut
+            Codigo
         </th>
         <th>
             Nombre
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Credits)
-            </th>*@
+        <th>
+            Cantidad
+        </th>
         <th>
             #
         </th>
@@ -30,25 +30,28 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Rut)
+                @Html.DisplayFor(modelItem => item.Codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.nombre)
             </td>
             <td>
-                <a id="btnEditCaso" onclick="editar('@item.Id.ToString()')" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                @Html.DisplayFor(modelItem => item.precioUnitario)
+            </td>
+            <td>
+                <a id="btnEditCaso" onclick="editar(@item.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-edit fa-2x"> </span>
                 </a>
-                <a id="btnDelete" onclick="eliminar('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                <a id="btnDelete" onclick="eliminar(@item.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-trash fa-2x"> </span>
                 </a>
 
                 @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
-           data-placement="left" data-toggle="tooltip" data-original-title="">
-            <span class="fa fa-edit fa-2x"> </span>
-        </a>*@
+                       data-placement="left" data-toggle="tooltip" data-original-title="">
+                        <span class="fa fa-edit fa-2x"> </span>
+                    </a>*@
             </td>
         </tr>
     }
@@ -63,22 +66,13 @@
         });
 
         function editar(Id) {
-            document.location.href = "@Url.Content("~/Usuario/modificar")" + "/" + Id;
+            document.location.href = "@Url.Content("~/Producto/Edit")" + "/" + Id;
         }
 
 
         function eliminar(Id) {
             if (confirm("Esta seguro que desea eliminar???")) {
-
-                var url = "@Url.Content("~/Usuario/Delete")" + "/" + Id;
-                console.log("entro aca");
-
-
-
-                @*@Guid.NewGuid(Id);*@
-                var parametros = Id;
-                console.log(parametros)
-                console.log("entro aca");
+                var url = "@Url.Content("~/Producto/Delete")" + "/" + Id;
                 $.post(url, function (response) {
                     if (response.Error == true) {
                         setTimeout(bajaModal, 1000);
@@ -119,5 +113,5 @@
 
 
     </script>
-    
+
 }

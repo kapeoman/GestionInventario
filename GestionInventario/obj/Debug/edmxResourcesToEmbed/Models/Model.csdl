@@ -42,10 +42,11 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Activo" Type="Boolean" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Persona" Relationship="Self.FK_Usuario_Persona" FromRole="Usuario" ToRole="Persona" />
     <NavigationProperty Name="Rol" Relationship="GestionInventarioModel.Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+    <Property Name="PassModificada" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_Persona_Sexo">
     <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
@@ -129,6 +130,7 @@
       <End Role="Rol" EntitySet="Rol" />
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
+    <EntitySet Name="Producto" EntityType="GestionInventarioModel.Producto" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -188,4 +190,14 @@
     <End Type="GestionInventarioModel.Rol" Role="Rol" Multiplicity="*" />
     <End Type="GestionInventarioModel.Usuario" Role="Usuario" Multiplicity="*" />
   </Association>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="precioUnitario" Type="Int32" />
+    <Property Name="minimo" Type="Int32" />
+    <Property Name="maximo" Type="Int32" />
+  </EntityType>
 </Schema>

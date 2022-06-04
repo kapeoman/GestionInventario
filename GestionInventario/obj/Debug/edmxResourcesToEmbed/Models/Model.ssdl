@@ -39,6 +39,16 @@
     <Property Name="SexoCodigo" Type="smallint" Nullable="false" />
     <Property Name="FechaNacimiento" Type="date" />
   </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="precioUnitario" Type="int" />
+    <Property Name="minimo" Type="int" />
+    <Property Name="maximo" Type="int" />
+  </EntityType>
   <EntityType Name="Rol">
     <Key>
       <PropertyRef Name="Codigo" />
@@ -69,8 +79,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="150" />
-    <Property Name="Activo" Type="bit" />
+    <Property Name="Password" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="PassModificada" Type="bit" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Usuario_Rol">
     <Key>
@@ -200,6 +211,7 @@
     <EntitySet Name="Operacion_Rol" EntityType="Self.Operacion_Rol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />

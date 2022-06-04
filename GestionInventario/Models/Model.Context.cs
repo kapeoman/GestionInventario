@@ -34,6 +34,9 @@ namespace GestionInventario.Models
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Operaciones> Operaciones { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Inventario> Inventario { get; set; }
+        public virtual DbSet<InventarioHistorico> InventarioHistorico { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

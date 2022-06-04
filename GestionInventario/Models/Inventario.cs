@@ -12,23 +12,20 @@ namespace GestionInventario.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Inventario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Inventario()
         {
-            this.Rol = new HashSet<Rol>();
             this.InventarioHistorico = new HashSet<InventarioHistorico>();
         }
     
-        public System.Guid Id { get; set; }
-        public string Password { get; set; }
-        public bool Activo { get; set; }
-        public bool PassModificada { get; set; }
+        public int Codigo { get; set; }
+        public int CodigoProducto { get; set; }
+        public int Stock { get; set; }
+        public bool Eliminado { get; set; }
     
-        public virtual Persona Persona { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rol> Rol { get; set; }
+        public virtual Producto Producto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InventarioHistorico> InventarioHistorico { get; set; }
     }
