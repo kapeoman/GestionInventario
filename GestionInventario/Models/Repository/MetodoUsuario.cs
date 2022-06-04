@@ -109,6 +109,8 @@ namespace GestionInventario.Models.Repository
                            {
                                Id = d.Id,
                                Rut = d.Run,
+                               RutCuerpo = d.RunCuerpo,
+                               RutDigito = d.RunDigito,
                                Nombre = d.Nombres,
                                ApellidoPaterno = d.ApellidoPaterno,
                                ApellidoMaterno = d.ApellidoMaterno,
@@ -117,8 +119,51 @@ namespace GestionInventario.Models.Repository
                                FechaNacimiento = d.FechaNacimiento
                            }).SingleOrDefault();
 
+            usuarioView.Sexos = db.Sexo.ToList();
 
             return usuarioView;
+        }
+
+        public ResponseModel ModificarUser(UsuarioView usuarioView)
+        {
+
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    Persona persona = db.Persona.Where(x => x.Id == usuarioView.Id).SingleOrDefault();
+
+                    persona.RunCuerpo = usuarioView.RutCuerpo;
+                    persona.RunDigito = usuarioView.RutDigito;
+                    persona.Nombres = usuarioView.Nombre;
+                    persona.ApellidoPaterno = usuarioView.ApellidoPaterno;
+                    persona.ApellidoMaterno = usuarioView.ApellidoMaterno;
+                    persona.FechaNacimiento = usuarioView.FechaNacimiento;
+                    persona.Email = usuarioView.Email;
+                    persona.SexoCodigo = short.Parse(usuarioView.Sexo.ToString());
+
+                    db.Entry(persona).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                }
+
+
+                response.Error = false;
+                response.Mensaje = "Se a modificado correctamente al usuario";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Mensaje = "No se a podido realizar la modificacion " + ex;
+                return response;
+            }
+            
+            
+
+
+            
         }
 
         public ResponseModel DeleteUser(Guid id)

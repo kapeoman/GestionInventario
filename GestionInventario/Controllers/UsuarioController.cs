@@ -74,5 +74,11 @@ namespace GestionInventario.Controllers
             var usuarioView = metodoUsuario.GetUsuario(Guid.Parse(Id));
             return View(usuarioView);
         }
+        [HttpPost]
+        public ActionResult modificar(UsuarioView usuarioView)
+        {
+            var response = metodoUsuario.ModificarUser(usuarioView);
+            return Json(response);
+        }
     }
 }
