@@ -17,25 +17,24 @@
     </div>
 </div><div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-    <button type="submit" id="btnIngresar" class="btn btn-danger"><i class="fa fa-check"></i> GUARDAR STOCK <span class="glyphicon glyphicon-arrow-right"></span></button>
+    <button type="submit" id="btnIngresarStock" class="btn btn-danger"><i class="fa fa-check"></i> GUARDAR STOCK <span class="glyphicon glyphicon-arrow-right"></span></button>
 </div>
                 <input type="hidden" name="confirmacion" id="confirmacion" value="" />}
     </div>
 </div>
 
 
-@section scripts
-{
+
     <script>
 
     $(document).ready(function ()
     {
         console.log("entro")
-        $("#btnIngresar").click(function (e) {
+        $("#btnIngresarStock").click(function (e) {
             $("#cargaDatosBarra").modal('show');
             e.preventDefault();
             url = "@Url.Action("Edit", "Inventario")"
-            parametros = $(this).serialize();
+            parametros = $("#StockInventario").serialize();
             $.post(url, parametros, function (response) {
                 if (response.Error) {
                     console.log("entro al if")
@@ -74,4 +73,3 @@
     });
 
     </script>
-}
