@@ -1,12 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,10 +36,45 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+
+        @* MODAL CARGANDO DATOS*@
+        <div class="modal fade" id="cargaDatosBarra" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog modalCustom modal-dialog-custom modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="progress" id="barra" style="margin-bottom:0px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: #5cb85c;">
+                                <span class="sr-only">100% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*MODAL DE CARGA*@
+        <div class="modal fade" id="cargarMensajes" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-static">
+                <div class="modal-content">
+                    <div class="modal-header text-center pb-0">
+                        <h6>MENSAJE</h6>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div id="mensajeLoad">
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
         </footer>
     </div>
+
+   
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

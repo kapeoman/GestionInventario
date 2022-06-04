@@ -5,6 +5,8 @@
 
 <h2>Index</h2>
 
+@ViewBag.Mensaje
+
 <button><a href="@Url.Content("~/Usuario/Add")">Ingresar Usuario</a></button>
 
 <table class="table">
@@ -16,8 +18,8 @@
             Nombre
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Credits)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Credits)
+            </th>*@
         <th>
             #
         </th>
@@ -32,14 +34,90 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
-            </td>            
+            </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Rut }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Rut }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Rut })
+                <a id="btnEditCaso" onclick="editar('@item.Id.ToString()')" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                    <span class="fa fa-edit fa-2x"> </span>
+                </a>
+                <a id="btnDelete" onclick="eliminar('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                    <span class="fa fa-trash fa-2x"> </span>
+                </a>
+
+                @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
+           data-placement="left" data-toggle="tooltip" data-original-title="">
+            <span class="fa fa-edit fa-2x"> </span>
+        </a>*@
             </td>
         </tr>
     }
 
 </table>
 
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function editar(Id) {
+            document.location.href = "@Url.Content("~/Usuario/modificar")" + "/" + Id;
+        }
+
+
+        function eliminar(Id) {
+            if (confirm("Esta seguro que desea eliminar???")) {
+
+                var url = "@Url.Content("~/Usuario/Delete")" + "/" + Id;
+                console.log("entro aca");
+
+
+
+                @*@Guid.NewGuid(Id);*@
+                var parametros = Id;
+                console.log(parametros)
+                console.log("entro aca");
+                $.post(url, function (response) {
+                    if (response.Error == true) {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatosBarra").modal('hide');
+                        }
+                        function carga() {
+                            $('#cargarMensajes').modal('hide');
+                        }
+
+                    }
+                    else {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+                        //setTimeout(redireccionar, 1000)
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatos").modal('hide');
+                        }
+                        function carga() {
+                            //$('#cargarMensajes').modal('hide');
+                            document.location.href = "@Url.Action("Index","Usuario")";
+                        }
+
+
+                    }
+                });
+
+
+            }
+
+        }
+
+
+    </script>
+    
+}

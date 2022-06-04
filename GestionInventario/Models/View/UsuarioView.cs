@@ -8,25 +8,26 @@ namespace GestionInventario.Models.View
 {
     public class UsuarioView
     {
-        [Required]
-        [Range(1000000, 99999999)]
-        [RegularExpression("(^[0-9]+$)", ErrorMessage = "Solo se permiten números")]
+        public Guid Id { get; set; }
+        //[Required]
+        //[Range(1000000, 99999999)]
+        //[RegularExpression("(^[0-9]+$)", ErrorMessage = "Solo se permiten números")]
         public int RutCuerpo { get; set; }
-        [Required]
-        [RegularExpression("(^[0-9Kk]+$)", ErrorMessage = "Solo se permiten números y letra k")]
+        //[Required]
+        //[RegularExpression("(^[0-9Kk]+$)", ErrorMessage = "Solo se permiten números y letra k")]
         public string RutDigito { get; set; } = "0";
         public string Rut { get; set; }
-        [Required]
+        //[Required]
         public string Nombre { get; set; }
-        [Required]
+        //[Required]
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public DateTime? FechaNacimiento { get; set; }
-        [Required]
+        //[Required]
         public int Sexo { get; set; }
         public List<Sexo> Sexos { get; set; } 
 

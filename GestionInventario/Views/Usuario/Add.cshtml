@@ -2,89 +2,155 @@
 
 @{
     ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Add</h2>
 
-@using (Html.BeginForm()) 
+@ViewBag.Mensaje
+
+@using (Html.BeginForm("Add", "Usuario", FormMethod.Post, new { id = "FormAdd", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>UsuarioView</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.RutCuerpo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.RutCuerpo, new { @class = "form-control", @maxlength = "8" })
-            @Html.ValidationMessageFor(model => model.RutCuerpo, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.RutDigito, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.RutDigito, new { @class = "form-control", @maxlength = "1" })
-            @Html.ValidationMessageFor(model => model.RutDigito, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>UsuarioView</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.RutCuerpo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.RutCuerpo, new { @class = "form-control", @maxlength = "8" })
+                @Html.ValidationMessageFor(model => model.RutCuerpo, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.RutDigito, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RutDigito, new { @class = "form-control", @maxlength = "1" })
+                @Html.ValidationMessageFor(model => model.RutDigito, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.ApellidoPaterno, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ApellidoPaterno, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.ApellidoMaterno, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ApellidoMaterno, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ApellidoMaterno, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApellidoPaterno, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApellidoPaterno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApellidoMaterno, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApellidoMaterno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApellidoMaterno, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @type = "date" })
-            @*@Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class = "control-label col-md-2">Sexo</label>
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.Sexo, new SelectList(Model.Sexos.OrderBy(z => z.Nombre), "Codigo", "Nombre"), "Seleccione Sexo...", new { @class = "form-control", name = "Sexo" })
-            @*@Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @type = "date" })
+                @*@Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Sexo</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.Sexo, new SelectList(Model.Sexos.OrderBy(z => z.Nombre), "Codigo", "Nombre"), "Seleccione Sexo...", new { @class = "form-control", name = "Sexo" })
+                @*@Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<!-- Button trigger modal --><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button><!-- Modal --><div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">
+                ...
+            </div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Save changes</button></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+
+    $(document).ready(function ()
+    {
+
+        $("#FormAdd").submit(function (e) {
+            $("#cargaDatosBarra").modal('show');
+            e.preventDefault();
+            url = "@Url.Action("Add","Usuario")"
+            parametros = $(this).serialize();
+            $.post(url, parametros, function (response) {
+                if (response.Error == true) {
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatosBarra").modal('hide');
+                    }
+                    function carga() {
+                        $('#cargarMensajes').modal('hide');
+                    }
+                    @*document.location.href = "@Url.Action("Add","Usuario")"*@
+                }
+                else {
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+                    //setTimeout(redireccionar, 1000)
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatos").modal('hide');
+                    }
+                    function carga() {
+                        //$('#cargarMensajes').modal('hide');
+                        document.location.href = "@Url.Action("Index","Usuario")"
+                    }
+                    
+
+                }
+            })
+        });
+    });
+
+    </script>
+}

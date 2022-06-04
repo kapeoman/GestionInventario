@@ -34,35 +34,45 @@ namespace GestionInventario.Controllers
         [HttpPost]
         public ActionResult Add(UsuarioView usuarioView)
         {
-            if (!ModelState.IsValid)
+            ResponseModel response = new ResponseModel();
+            
+            if (usuarioView.RutCuerpo < 1000000)
             {
-                usuarioView.Sexos = metodoUsuario.ListaSexo();
-                return View(usuarioView);
+                response.Error = true;
+                response.Mensaje = "Los parametros no son validos";
+                //usuarioView.Sexos = metodoUsuario.ListaSexo();
+                return Json(response);
             }
             else
             {
-                var estado = metodoUsuario.AddUser(usuarioView);
-                if (estado.Error == false)
+                response = metodoUsuario.AddUser(usuarioView);
+                if (response.Error == false)
                 {
-                    return RedirectToAction("Index", "Usuario");
+                    //ViewBag.Mensaje = response.Mensaje;
+                    return Json(response);
                 }
                 else
                 {
-                    usuarioView.Sexos = metodoUsuario.ListaSexo();
-                    return View(usuarioView);
+                    //ViewBag.Mensaje = estado.Mensaje;
+                    //usuarioView.Sexos = metodoUsuario.ListaSexo();
+                    return Json(response);
                 }
                 
             }
             //UsuarioView usuarioView = new UsuarioView();
             
         }
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Delete(string Id)
         {
-            return View();
+            
+            var response = metodoUsuario.DeleteUser(Guid.Parse(Id));
+            return Json(response);
         }
-        public ActionResult modificar()
+        public ActionResult modificar(string Id)
         {
-            return View();
+            var usuarioView = metodoUsuario.GetUsuario(Guid.Parse(Id));
+            return View(usuarioView);
         }
     }
 }
