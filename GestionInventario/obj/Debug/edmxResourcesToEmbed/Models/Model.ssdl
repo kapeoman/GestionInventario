@@ -1,5 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GestionInventarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CodigoProducto" Type="int" Nullable="false" />
+    <Property Name="Stock" Type="int" Nullable="false" />
+    <Property Name="Eliminado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InventarioHistorico">
+    <Key>
+      <PropertyRef Name="CodigoInventario" />
+      <PropertyRef Name="Fecha" />
+    </Key>
+    <Property Name="CodigoInventario" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="StockAnterior" Type="int" Nullable="false" />
+    <Property Name="StockNuevo" Type="int" Nullable="false" />
+    <Property Name="PrecioUnitario" Type="int" Nullable="false" />
+    <Property Name="Ingreso" Type="bit" Nullable="false" />
+    <Property Name="UsuarioId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
   <EntityType Name="Modulo">
     <Key>
       <PropertyRef Name="Codigo" />
@@ -91,6 +113,42 @@
     <Property Name="IdUsuario" Type="uniqueidentifier" Nullable="false" />
     <Property Name="CodigoRol" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_Inventario_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Inventario">
+        <PropertyRef Name="CodigoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventarioHistorico_Inventario">
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+    <End Role="InventarioHistorico" Type="Self.InventarioHistorico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventario">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="InventarioHistorico">
+        <PropertyRef Name="CodigoInventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventarioHistorico_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="InventarioHistorico" Type="Self.InventarioHistorico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InventarioHistorico">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Operacion_Rol_Operaciones">
     <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="1" />
     <End Role="Operacion_Rol" Type="Self.Operacion_Rol" Multiplicity="*" />
@@ -207,6 +265,8 @@
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="GestionInventarioModelStoreContainer">
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InventarioHistorico" EntityType="Self.InventarioHistorico" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Operacion_Rol" EntityType="Self.Operacion_Rol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
@@ -217,6 +277,18 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario_Rol" EntityType="Self.Usuario_Rol" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Inventario_Producto" Association="Self.FK_Inventario_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Inventario" EntitySet="Inventario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventarioHistorico_Inventario" Association="Self.FK_InventarioHistorico_Inventario">
+      <End Role="Inventario" EntitySet="Inventario" />
+      <End Role="InventarioHistorico" EntitySet="InventarioHistorico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventarioHistorico_Usuario" Association="Self.FK_InventarioHistorico_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="InventarioHistorico" EntitySet="InventarioHistorico" />
+    </AssociationSet>
     <AssociationSet Name="FK_Operacion_Rol_Operaciones" Association="Self.FK_Operacion_Rol_Operaciones">
       <End Role="Operaciones" EntitySet="Operaciones" />
       <End Role="Operacion_Rol" EntitySet="Operacion_Rol" />

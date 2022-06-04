@@ -24,8 +24,9 @@ namespace GestionInventario
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/fontawesome-free-5.15.2/css/all.css",
                       "~/Content/bootstrap.css",
+                      //"~/Content/fontawesome-free-5.15.2/bootstrap.css",
+                      //"~/Content/fontawesome-free-5.15.2/css/all.css",
                       "~/Content/site.css"));
         }
     }

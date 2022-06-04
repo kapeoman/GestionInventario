@@ -35,6 +35,15 @@ namespace GestionInventario.Models.Repository
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
                     db.Producto.Add(producto);
+                    Inventario inventario = (new Inventario
+                    {
+                        CodigoProducto = producto.Codigo,
+                        Producto = producto,
+                        Stock = 0,
+                        Eliminado = false,
+                        
+                    });
+                    db.Inventario.Add(inventario);                    
                     db.SaveChanges();
                     dbContextTransaction.Commit();
                 }
