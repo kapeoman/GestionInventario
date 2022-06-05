@@ -14,7 +14,7 @@
                 <h4><i class="fa fa-user fa-fw "></i>ListaInventarioHistorico</h4>
             </div>
             <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
-                <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-success" href="@Url.Action("repoInventarioHistoricoFull", "Inventario")" role="button"><i class="fa fa-file-excel"> </i>  DESCARGAR INVENTARIO HISTORICO</a> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
+                <a @*style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;"*@ class="btn btn-success" @*class="btn btn-primary btn-lg"*@ href="@Url.Action("repoInventarioHistoricoFull", "Inventario")" role="button" aria-pressed="true"><i class="fa fa-file-excel"></i>Descargar Reporte Inventario</a> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
                 @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
                     <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
 
@@ -101,8 +101,18 @@
 {
     <script>
         $(document).ready(function () {
-            $('#tablaInventarioHistorico').DataTable();
+            $('#tablaInventarioHistorico').DataTable(
+                {
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                    }
+
+                }
+            );
+
         });
+
+
 
     </script>
 }

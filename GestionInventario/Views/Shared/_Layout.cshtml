@@ -14,13 +14,13 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="fas fa-bars" style="color: white" data-toggle="collapse" data-target=".navbar-collapse">
-                    @*<span class="fa-icons"></span>
-                        <span class="fa-icons"></span>
-                        <span class="fa-icons"></span>*@
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Gestion Inventario", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
@@ -59,62 +59,64 @@
                     <li><a href="@Url.Action("CerrarSession", "Acceso")"><span class="fa fa-sign-out-alt" style="color: white"></span></a></li>
                     @*<li>@Html.ActionLink("Cerrar Sesión", "CerrarSession", "Acceso")</li>*@
                 </ul>
+                
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    </div>
+    <br />
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
 
-        @* MODAL CARGANDO DATOS*@
-        <div class="modal fade" id="cargaDatosBarra" data-backdrop="static" tabindex="-1" role="dialog">
-            <div class="modal-dialog modalCustom modal-dialog-custom modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="progress" id="barra" style="margin-bottom:0px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: #5cb85c;">
-                                <span class="sr-only">100% Complete</span>
+            @* MODAL CARGANDO DATOS*@
+            <div class="modal fade" id="cargaDatosBarra" data-backdrop="static" tabindex="-1" role="dialog">
+                <div class="modal-dialog modalCustom modal-dialog-custom modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="progress" id="barra" style="margin-bottom:0px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: #5cb85c;">
+                                    <span class="sr-only">100% Complete</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        @*MODAL DE CARGA*@
-        <div class="modal fade" id="cargarMensajes" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-static">
-                <div class="modal-content">
-                    <div class="modal-header text-center pb-0">
-                        <h6>MENSAJE</h6>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div id="mensajeLoad">
+            @*MODAL DE CARGA*@
+            <div class="modal fade" id="cargarMensajes" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-static">
+                    <div class="modal-content">
+                        <div class="modal-header text-center pb-0">
+                            <h6>MENSAJE</h6>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div id="mensajeLoad">
 
 
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Produccion CHANCHITO FELIZ</p>
+            </footer>
         </div>
 
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
 
-
-    @*<script src="~/Scripts/jquery-3.6.0.js"></script>
+        @*<script src="~/Scripts/jquery-3.6.0.js"></script>
         <script src="~/Scripts/jquery.validate.js"></script>
         <script src="~/Scripts/bootstrap.js"></script>
         <script src="~/Content/fontawesome-free-5.15.2/js/all.js"></script>*@
 
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @*@Scripts.Render("~/bundles/jqueryval")*@
-    @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Content/DataTables/datatables.js"></script>
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @*@Scripts.Render("~/bundles/jqueryval")*@
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Content/DataTables/datatables.js"></script>
+        @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
 
 @ViewBag.Mensaje
 
@@ -17,7 +17,7 @@
                 <h4><i class="fa fa-user fa-fw "></i>Productos</h4>
             </div>
             <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
-                <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-success" href="@Url.Action("Add", "Producto")" role="button"><i class="fa fa-plus"> </i>  Ingresar Producto</a> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
+                <a class="btn btn-success" href="@Url.Action("Add", "Producto")" role="button"><i class="fa fa-plus"> </i>  Ingresar Producto</a> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
                 @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
                     <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
 
@@ -89,7 +89,12 @@
 {
     <script>
         $(document).ready(function () {
-            $('#tablaProducto').DataTable();
+            $('#tablaProducto').DataTable(
+                {
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                    }
+                });
         });
 
         function editar(Codigo) {

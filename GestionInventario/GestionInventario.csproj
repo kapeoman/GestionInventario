@@ -220,10 +220,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1923,6 +1919,7 @@
     <Content Include="Content\fontawesome-free-5.15.2\webfonts\fa-solid-900.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1997,21 +1994,15 @@
     <Content Include="Content\fontawesome-free-5.15.2\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\fontawesome-free-5.15.2\webfonts\fa-solid-900.woff" />
     <Content Include="Content\fontawesome-free-5.15.2\webfonts\fa-solid-900.woff2" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
@@ -2052,6 +2043,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
