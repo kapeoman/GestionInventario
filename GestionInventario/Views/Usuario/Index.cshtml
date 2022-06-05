@@ -44,6 +44,10 @@
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-trash fa-2x"> </span>
                 </a>
+                <a id="btnDelete" onclick="resetearPass('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Restablecer Pass"
+                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                    <span class="fa fa-trash fa-2x"> </span>
+                </a>
 
                 @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
            data-placement="left" data-toggle="tooltip" data-original-title="">
@@ -64,6 +68,47 @@
 
         function editar(Id) {
             document.location.href = "@Url.Content("~/Usuario/modificar")" + "/" + Id;
+        }
+
+        function resetearPass(Id) {
+             if (confirm("Esta seguro que desea restablecer la contraseña???")) {
+
+                var url = "@Url.Content("~/Usuario/recetearPass")" + "/" + Id;               
+                $.post(url, function (response) {
+                    if (response.Error == true) {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatosBarra").modal('hide');
+                        }
+                        function carga() {
+                            $('#cargarMensajes').modal('hide');
+                        }
+
+                    }
+                    else {
+                        setTimeout(bajaModal, 1000);
+                        setTimeout(carga, 4000);
+                        //setTimeout(redireccionar, 1000)
+                        function bajaModal() {
+                            $('#cargarMensajes').modal('show');
+                            $('#mensajeLoad').html(response.Mensaje);
+                            $("#cargaDatos").modal('hide');
+                        }
+                        function carga() {
+                            //$('#cargarMensajes').modal('hide');
+                            document.location.href = "@Url.Action("Index","Usuario")";
+                        }
+
+
+                    }
+                });
+
+
+            }
         }
 
 

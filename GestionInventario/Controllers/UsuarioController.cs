@@ -80,5 +80,25 @@ namespace GestionInventario.Controllers
             var response = metodoUsuario.ModificarUser(usuarioView);
             return Json(response);
         }
+
+        public ActionResult recetearPass(string Id)
+        {
+            var response = metodoUsuario.ResetearPass(Guid.Parse(Id));
+            return Json(response);
+        }
+
+        public ActionResult cambiarPass()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult cambiarPass(string passActual, string passNueva)
+        {
+            var response = metodoUsuario.CambiarPass(passActual, passNueva);
+
+
+            return Json(response);
+        }
     }
 }

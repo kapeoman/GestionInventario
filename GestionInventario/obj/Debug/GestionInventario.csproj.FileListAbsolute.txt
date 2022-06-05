@@ -177,3 +177,9 @@ C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\Ge
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.csproj.CopyComplete
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.dll
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.pdb
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.Auth.dll
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.dll
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.pdb
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.xml
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.Auth.pdb
+C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\bin\Microsoft.Exchange.WebServices.Auth.xml

@@ -49,64 +49,7 @@
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-edit fa-2x"> </span>
                 </a>
-                <a id="btnDelete" onclick="eliminar(@itemActivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
-                   data-placement="left" data-toggle="tooltip" data-original-title="">
-                    <span class="fa fa-trash fa-2x"> </span>
-                </a>
-
-                @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
-                       data-placement="left" data-toggle="tooltip" data-original-title="">
-                        <span class="fa fa-edit fa-2x"> </span>
-                    </a>*@
-            </td>
-        </tr>
-    }
-
-</table>
-
-<h2>Inventario Eliminado</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Nombre Producto
-        </th>
-        <th>
-            Stock
-        </th>
-        <th>
-            Precio Unitario
-        </th>
-        <th>
-            #
-        </th>
-        @*<th></th>*@
-    </tr>
-
-    @foreach (var itemInactivo in Model.inventarioInactivo)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => itemInactivo.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => itemInactivo.Producto.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => itemInactivo.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => itemInactivo.Producto.precioUnitario)
-            </td>
-            <td>
-                <a id="btnEditCaso" onclick="activar(@itemInactivo.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Activar"
-                   data-placement="left" data-toggle="tooltip" data-original-title="">
-                    <span class="fa fa-edit fa-2x"> </span>
-                </a>
-                @*<a id="btnDelete" onclick="eliminar(@itemInactivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                @*<a id="btnDelete" onclick="eliminar(@itemActivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
                    data-placement="left" data-toggle="tooltip" data-original-title="">
                     <span class="fa fa-trash fa-2x"> </span>
                 </a>*@

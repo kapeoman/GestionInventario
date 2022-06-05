@@ -14,6 +14,7 @@ namespace GestionInventario.Filtros
         {
 
             var oUser = (Usuario)HttpContext.Current.Session["User"];
+            
             //var permisos = (Perfil)HttpContext.Current.Session["Perfil"];
             if (oUser == null)
             {
@@ -24,11 +25,13 @@ namespace GestionInventario.Filtros
             }
             else
             {
-
+                
                 if (filterContext.Controller is AccesoController == true)
                 {
                     filterContext.HttpContext.Response.Redirect("~/Home/Index");
+                                                          
                 }
+                
             }
 
             base.OnActionExecuting(filterContext);

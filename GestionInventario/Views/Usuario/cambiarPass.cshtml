@@ -1,0 +1,104 @@
+﻿@*@model GestionInventario.Models.Usuario*@
+@{
+    ViewBag.Title = "cambiarPass";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<h2>cambiarPass</h2>
+
+@using (Html.BeginForm("cambiarPass", "Producto", FormMethod.Post, new { id = "FormCambiarPass", role = "form" }))
+{
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        <h4>Cambiar Contraseña</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Password Actual</label>
+            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                <input type="password" name="passAnterior" id="passAnterior" value="" class="form-control" />
+                @*@Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Password Nueva</label>
+            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                <input type="password" name="passNueva" id="passNueva" value="" class="form-control" />
+                @*@Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" class="btn btn-warning">@Html.ActionLink("Volver", "Index")</button>
+                <button type="button" id="btnGuardarPass" class="btn btn-success">Guardar</button>                
+            </div>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script>
+
+    $(document).ready(function () {
+
+    });
+
+    $("#btnGuardarPass").click(function () {
+        var passActual = $("#passAnterior").val();
+        var passNueva = $("#passNueva").val();
+
+        var url = '@Url.Action("cambiarPass", "Usuario")';
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { passActual: passActual, passNueva: passNueva },
+            success: function (response) {
+                if (response.Error) {
+                    console.log("entro al if")
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatosBarra").modal('hide');
+                    }
+                    function carga() {
+                        $('#cargarMensajes').modal('hide');
+                    }
+                    @*document.location.href = "@Url.Action("Add","Usuario")"*@
+                }
+                else {
+                    console.log("entro al else")
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+                    //setTimeout(redireccionar, 1000)
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatos").modal('hide');
+                    }
+                    function carga() {
+                        document.location.href = "@Url.Action("Index","Home")"
+                    }
+
+
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+
+    });
+
+    </script>
+
+}
