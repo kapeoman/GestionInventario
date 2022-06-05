@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GestionInventario.Models;
 using GestionInventario.Models.Repository;
 using GestionInventario.Models.View;
+using OfficeOpenXml;
 
 namespace GestionInventario.Controllers
 {
@@ -20,6 +22,11 @@ namespace GestionInventario.Controllers
             return View(inventario);
         }
 
+        public ActionResult ListaInventarioHistorico()
+        {
+            List<InventarioHistorico> inventarioHistorico = metodoInventario.ListaInventarioHistoricos();
+            return View(inventarioHistorico);
+        }
         public ActionResult Edit(int Codigo)
         {
             Inventario inventario = metodoInventario.GetInventario(Codigo);
@@ -44,6 +51,35 @@ namespace GestionInventario.Controllers
         {
             var response = metodoInventario.ReactivarInventario(Codigo);
             return Json(response);
+        }
+
+        public ActionResult repoInventarioHistoricoFull()
+        {
+
+            string user = User.Identity.Name;
+            using (ExcelPackage repoExcel = metodoInventario.ReporteFullHistorico())
+            {
+                var stream = new MemoryStream();
+                repoExcel.SaveAs(stream);
+                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                string fileName = "Reporte General Historico " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + ".xlsx";
+                stream.Position = 0;
+                return File(stream, contentType, fileName);
+            }
+        }
+        public ActionResult repoInventarioFull()
+        {
+
+            string user = User.Identity.Name;
+            using (ExcelPackage repoExcel = metodoInventario.ReporteFullInventario())
+            {
+                var stream = new MemoryStream();
+                repoExcel.SaveAs(stream);
+                string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                string fileName = "Reporte General Inventario " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + ".xlsx";
+                stream.Position = 0;
+                return File(stream, contentType, fileName);
+            }
         }
     }
 }

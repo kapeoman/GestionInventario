@@ -3,61 +3,83 @@
     ViewBag.Title = "IndexProductoEliminado";
 }
 
-<h2>Index Producto Eliminado</h2>
+@*<h2>Index Producto Eliminado</h2>*@
 
 @ViewBag.Mensaje
 
 @*<button type="button" class="btn btn-success"><a href="@Url.Content("~/Producto/Add")">Ingresar Producto</a></button>*@
 
-<table class="table">
-    <tr>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Precio Unitario
-        </th>
-        <th>
-            #
-        </th>
-        @*<th></th>*@
-    </tr>
+<div class="panel panel-danger">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precioUnitario)
-            </td>
-            <td>
-                @*<a id="btnEditProducto" onclick="editar(@item.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
-                   data-placement="left" data-toggle="tooltip" data-original-title="">
-                    <span class="fa fa-edit fa-2x"> </span>
-                </a>*@
-                <a id="btnDeleteProducto" onclick="eliminar(@item.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Habilitar"
-                   data-placement="left" data-toggle="tooltip" data-original-title="">
-                    <span class="fa fa-trash fa-2x"> </span>
-                </a>
+    <div class="panel-heading text-left">
+        <div class="row">
+            <div class="col-lg-6 col-md-9 col-sm-9 col-xs-12">
+                <h4><i class="fa fa-user fa-fw "></i>Producto Eliminado</h4>
+            </div>
+            <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
+                <!--<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-success" href="Url.Action("repoInventarioHistoricoFull", "Inventario")" role="button"><i class="fa fa-file-excel"> </i>  DESCARGAR INVENTARIO HISTORICO</a>--> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
+                @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
+                    <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
 
-                @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
-                       data-placement="left" data-toggle="tooltip" data-original-title="">
-                        <span class="fa fa-edit fa-2x"> </span>
-                    </a>*@
-            </td>
-        </tr>
-    }
+            </div>
 
-</table>
+        </div>
+    </div>
 
+    <div class="panel-body">
+        <table class="table" id="tablaProductoEliminado">
+            <thead>
+                <tr>
+                    <th>
+                        Codigo
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Precio Unitario
+                    </th>
+                    <th>
+                        #
+                    </th>
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Codigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.precioUnitario)
+                        </td>
+                        <td>
+                            @*<a id="btnEditProducto" onclick="editar(@item.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-edit fa-2x"> </span>
+                                </a>*@
+                            <a id="btnDeleteProducto" onclick="eliminar(@item.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Habilitar"
+                               data-placement="left" data-toggle="tooltip" data-original-title="">
+                                <span class="fa fa-trash fa-2x"> </span>
+                            </a>
+
+                            @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-edit fa-2x"> </span>
+                                </a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
 <div class="modal fade" id="modificarProducto" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
 </div>
@@ -66,7 +88,7 @@
 {
     <script>
         $(document).ready(function () {
-
+            $('#tablaProductoEliminado').DataTable();
         });
 
         function editar(Codigo) {
@@ -90,6 +112,7 @@
 
         function eliminar(Codigo) {
             if (confirm("Esta seguro que desea habilitar el producto???")) {
+                $("#cargaDatosBarra").modal('show');
                 var url = '@Url.Action("Delete","Producto")';
                 var Activo = 1;
                 $.ajax({

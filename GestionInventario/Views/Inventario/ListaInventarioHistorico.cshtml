@@ -1,0 +1,108 @@
+﻿@model List<GestionInventario.Models.InventarioHistorico>
+@{
+    ViewBag.Title = "ListaInventarioHistorico";
+}
+
+@*<h2>ListaInventarioHistorico</h2>*@
+
+
+<div class="panel panel-danger">
+
+    <div class="panel-heading text-left">
+        <div class="row">
+            <div class="col-lg-6 col-md-9 col-sm-9 col-xs-12">
+                <h4><i class="fa fa-user fa-fw "></i>ListaInventarioHistorico</h4>
+            </div>
+            <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
+                <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-success" href="@Url.Action("repoInventarioHistoricoFull", "Inventario")" role="button"><i class="fa fa-file-excel"> </i>  DESCARGAR INVENTARIO HISTORICO</a> @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
+                @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
+                    <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table" id="tablaInventarioHistorico">
+            <thead>
+                <tr>
+                    <th>
+                        Codigo
+                    </th>
+                    <th>
+                        Nombre Producto
+                    </th>
+                    <th>
+                        Stock Anterior
+                    </th>
+                    <th>
+                        Stock Actual
+                    </th>
+                    <th>
+                        Precio Unitario
+                    </th>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        #
+                    </th>
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var itemActivo in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.CodigoInventario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.Inventario.Producto.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.StockAnterior)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.StockNuevo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.PrecioUnitario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => itemActivo.Fecha)
+                        </td>
+                        <td>
+                            @*<a id="btnEditCaso" onclick="editar(@itemActivo.Codigo)" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-edit fa-2x"> </span>
+                                </a>*@
+                            @*<a id="btnDelete" onclick="eliminar(@itemActivo.Codigo)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-trash fa-2x"> </span>
+                                </a>*@
+
+                            @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-edit fa-2x"> </span>
+                                </a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#tablaInventarioHistorico').DataTable();
+        });
+
+    </script>
+}
