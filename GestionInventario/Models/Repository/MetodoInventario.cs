@@ -52,7 +52,7 @@ namespace GestionInventario.Models.Repository
             catch (Exception ex)
             {
                 response.Error = true;
-                response.Mensaje = "Se ha producido un error";
+                response.Mensaje = "Se ha producido un error " + ex.Message;
                 return response;
             }
         }
@@ -180,7 +180,7 @@ namespace GestionInventario.Models.Repository
                 //}
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return false;

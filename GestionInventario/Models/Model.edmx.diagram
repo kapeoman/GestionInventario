@@ -7,7 +7,7 @@
       <Diagram DiagramId="306706b243ea4c8fa0ce2db7a9a60115" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="GestionInventarioModel.Persona" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="GestionInventarioModel.Sexo" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestionInventarioModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestionInventarioModel.sysdiagrams" Width="3.875" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GestionInventarioModel.Usuario" Width="1.5" PointX="6.125" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="GestionInventarioModel.FK_Persona_Sexo" ManuallyRouted="false" />
         <AssociationConnector Association="GestionInventarioModel.FK_Usuario_Persona" ManuallyRouted="false" />

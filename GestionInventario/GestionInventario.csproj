@@ -2040,6 +2040,10 @@
     <Content Include="Views\Producto\IndexProductoEliminado.cshtml" />
     <Content Include="Views\Usuario\cambiarPass.cshtml" />
     <Content Include="Views\Inventario\ListaInventarioHistorico.cshtml" />
+    <Content Include="Views\Usuario\UsuariosInactivos.cshtml" />
+    <Content Include="Views\Usuario\Rol.cshtml" />
+    <Content Include="Views\Usuario\_AddRol.cshtml" />
+    <Content Include="Views\Usuario\_ModificarRol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,7 +29,11 @@ namespace GestionInventario.Models.View
         public DateTime? FechaNacimiento { get; set; }
         //[Required]
         public int Sexo { get; set; }
+        public List<int> Rol { get; set; }
         public List<Sexo> Sexos { get; set; } 
+        public List<Rol> rols { get; set; }
+
+
 
     }
 }

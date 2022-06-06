@@ -20,15 +20,26 @@ namespace GestionInventario.Controllers
             {
                 //List<UsuarioView> usuarioViews = metodoUsuario.ListaUsuarios();
 
-                return View(metodoUsuario.ListaUsuarios());
+                return View(metodoUsuario.ListaUsuarios(true));
             }
             
+        }
+
+        public ActionResult UsuariosInactivos()
+        {
+            using (GestionInventarioEntities db = new GestionInventarioEntities())
+            {
+                //List<UsuarioView> usuarioViews = metodoUsuario.ListaUsuarios();
+
+                return View(metodoUsuario.ListaUsuarios(false));
+            }
         }
 
         public ActionResult Add()
         {
             UsuarioView usuarioView = new UsuarioView();
             usuarioView.Sexos = metodoUsuario.ListaSexo();
+            usuarioView.rols = metodoUsuario.ListaRoles();
             return View(usuarioView);
         }
         [HttpPost]
@@ -44,7 +55,14 @@ namespace GestionInventario.Controllers
                 return Json(response);
             }
             else
-            {
+            {                
+                
+                for (int i = 0; i < metodoUsuario.ListaRoles().Count; i++)
+                {
+                    var rol = int.Parse(Request.Form["RolList[" + i + "]"].ToString());
+                    usuarioView.Rol.Add(rol);
+                }
+
                 response = metodoUsuario.AddUser(usuarioView);
                 if (response.Error == false)
                 {
@@ -63,10 +81,10 @@ namespace GestionInventario.Controllers
             
         }
         [HttpPost]
-        public ActionResult Delete(string Id)
+        public ActionResult Delete(string Id, string Activo)
         {
             
-            var response = metodoUsuario.DeleteUser(Guid.Parse(Id));
+            var response = metodoUsuario.DeleteUser(Guid.Parse(Id), int.Parse(Activo));
             return Json(response);
         }
         public ActionResult modificar(string Id)
@@ -98,6 +116,42 @@ namespace GestionInventario.Controllers
             var response = metodoUsuario.CambiarPass(passActual, passNueva);
 
 
+            return Json(response);
+        }
+
+        public ActionResult Rol()
+        {
+            List<Rol> roles = metodoUsuario.ListaRoles();
+            return View(roles);
+        }
+
+        public ActionResult AddRol()
+        {
+            Rol rol = new Rol();
+            return PartialView("_AddRol", rol);
+        }
+        [HttpPost]
+        public ActionResult AddRol(Rol rol)
+        {
+            ResponseModel response = metodoUsuario.AddRol(rol);
+            return Json(response);
+        }
+
+        public ActionResult ModificarRol(int Codigo)
+        {
+            Rol rol = metodoUsuario.GetRol(Codigo);
+            return PartialView("_ModificarRol", rol);
+        }
+        [HttpPost]
+        public ActionResult ModificarRol(Rol rol)
+        {
+            ResponseModel response = metodoUsuario.ModificarRol(rol);
+            return Json(response);
+        }
+
+        public ActionResult DeleteRol(int Codigo)
+        {
+            ResponseModel response = metodoUsuario.DeleteRol(Codigo);
             return Json(response);
         }
     }

@@ -1,9 +1,9 @@
 ﻿@model List<GestionInventario.Models.View.UsuarioView>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "UsuariosInactivos";
 }
 
-@*<h2>Index</h2>*@
+
 
 @ViewBag.Mensaje
 
@@ -14,17 +14,16 @@
     <div class="panel-heading text-left">
         <div class="row">
             <div class="col-lg-6 col-md-9 col-sm-9 col-xs-12">
-                <h4><i class="fa fa-user fa-fw "></i>Usuarios Activo</h4>
+                <h4><i class="fa fa-user fa-fw "></i>Usuarios Inactivos</h4>
             </div>
-            <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
-                <a class="btn btn-success" href="@Url.Action("Add", "Usuario")" role="button"><i class="fa fa-plus"> </i>Ingresar Usuario</a>
-                @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
-                @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
-                    <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
+            <!--<div class="col-lg-6 col-md-3 col-sm-3 col-xs-12 text-right">
+                <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-success" href="Url.Action("repoInventarioHistoricoFull", "Inventario")" role="button"><i class="fa fa-file-excel"> </i>  DESCARGAR INVENTARIO HISTORICO</a>-->
+            @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-green" href="@Url.Action("reposCasosFull", "CasoCovid")" role="button"><i class="fa fa-file-excel-o"> </i>  DESCARGAR CASOS</a>*@
+            @*<a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-red" href="@Url.Action("newCovidCase", "CasoCovid")" role="button"><i class="fa fa-plus"> </i>  ACTIVAR NUEVO CASO</a>
+                <a style="width: 180px;padding: 10px 0px 10px 0px;margin: 0px;" class="btn btn-lg bg-blue" href="@Url.Action("enviarCorreo", "CasoCovid")" role="button"><i class="fa fa-envelope"> </i>  ENVIAR CORREO</a>*@
 
-                <!--</div>-->
+            <!--</div>-->
 
-            </div>
         </div>
     </div>
 
@@ -40,8 +39,8 @@
                         Nombre
                     </th>
                     @*<th>
-                    @Html.DisplayNameFor(model => model.Credits)
-                </th>*@
+                            @Html.DisplayNameFor(model => model.Credits)
+                        </th>*@
                     <th>
                         #
                     </th>
@@ -59,23 +58,23 @@
                             @Html.DisplayFor(modelItem => item.Nombre)
                         </td>
                         <td>
-                            <a id="btnEditCaso" onclick="editar('@item.Id.ToString()')" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
+                            @*<a id="btnEditCaso" onclick="editar('@item.Id.ToString()')" class="btn btn-outline btn-success btn-xs newTooltip" title="Editar"
                                data-placement="left" data-toggle="tooltip" data-original-title="">
                                 <span class="fa fa-edit fa-1x"> </span>
-                            </a>
+                            </a>*@
                             <a id="btnDelete" onclick="eliminar('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
                                data-placement="left" data-toggle="tooltip" data-original-title="">
                                 <span class="fa fa-trash fa-1x"> </span>
                             </a>
-                            <a id="btnDelete" onclick="resetearPass('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Restablecer Pass"
+                            @*<a id="btnDelete" onclick="resetearPass('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Restablecer Pass"
                                data-placement="left" data-toggle="tooltip" data-original-title="">
                                 <span class="fa fa-fa fa-undo fa-1x"> </span>
-                            </a>
+                            </a>*@
 
                             @*<a id="btnEditCaso" onclick="editarCaso(@a.idCaso)" class="btn btn-outline btn-danger btn-xs newTooltip" title="Editar Caso"
-                           data-placement="left" data-toggle="tooltip" data-original-title="">
-                            <span class="fa fa-edit fa-2x"> </span>
-                        </a>*@
+                                   data-placement="left" data-toggle="tooltip" data-original-title="">
+                                    <span class="fa fa-edit fa-2x"> </span>
+                                </a>*@
                         </td>
                     </tr>
                 }
@@ -144,14 +143,15 @@
 
 
         function eliminar(Id) {
-            if (confirm("Esta seguro que desea eliminar???")) {
+            if (confirm("Esta seguro que desea Habilitar al usuario???")) {
                 $("#cargaDatosBarra").modal('show');
-                var Activo = 2;
-                //var url = "Url.Content("~/Usuario/Delete")" + "/" + Id + "/" + Activo;
+                var Activo = 1;
+                //var url = "Url.Content("~/Usuario/Delete")" + "/" + Id + ":" + Activo;
                 var url = "@Url.Action("Delete","Usuario")" + "?Id=" + Id + "&Activo=" + Activo;
+                console.log(url)
+                @*@Guid.NewGuid(Id);*@
+                var parametros = {Id: Id, Activo: Activo};
 
-                var parametros = { Id: Id, Activo: Activo };
-                //var parametros = Id;
                 $.post(url, function (response) {
                     if (response.Error == true) {
                         setTimeout(bajaModal, 1000);
@@ -178,7 +178,7 @@
                         }
                         function carga() {
                             //$('#cargarMensajes').modal('hide');
-                            document.location.href = "@Url.Action("Index","Usuario")";
+                            document.location.href = "@Url.Action("UsuariosInactivos", "Usuario")";
                         }
 
 

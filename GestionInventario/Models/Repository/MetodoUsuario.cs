@@ -14,11 +14,12 @@ namespace GestionInventario.Models.Repository
     {
         Usuario oUser = (Usuario)HttpContext.Current.Session["User"];
         public GestionInventarioEntities db = new GestionInventarioEntities();
-        public List<UsuarioView> ListaUsuarios()
+        public List<UsuarioView> ListaUsuarios(bool estado)
         {
             List<UsuarioView> lst = new List<UsuarioView>();
 
             lst = (from d in db.Usuario
+                   where d.Activo == estado
                    select new UsuarioView
                    {
                        Id = d.Persona.Id,
@@ -30,6 +31,13 @@ namespace GestionInventario.Models.Repository
 
             return lst;
         }
+
+        public List<Rol> ListaRoles()
+        {
+            List<Rol> lst = db.Rol.ToList();
+            return lst;
+        }
+
 
         public Usuario GetUsuario()
         {
@@ -51,6 +59,7 @@ namespace GestionInventario.Models.Repository
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
                     Persona persona = new Persona();
+                    List<Rol> rols = db.Rol.Where(x => usuarioView.Rol.Any(w => w == x.Codigo)).ToList();
                     persona = db.Persona.Where(x => x.RunCuerpo == usuarioView.RutCuerpo).FirstOrDefault();
                     if (persona == null)
                     {
@@ -71,9 +80,13 @@ namespace GestionInventario.Models.Repository
                         {
                             Persona = persona,
                             Password = persona.RunCuerpo.ToString(),
-                            Activo = false
-
+                            Activo = true,
                         });
+
+                        foreach (var item in rols)
+                        {
+                            usuario.Rol.Add(item);
+                        }
 
                         db.Persona.Add(persona);
                         db.Usuario.Add(usuario);
@@ -103,7 +116,7 @@ namespace GestionInventario.Models.Repository
                 responseModel.Mensaje = "Chanchito Triste T_T" + ex;
                 return responseModel;
             }
-            
+
         }
 
         public UsuarioView GetUsuario(Guid id)
@@ -129,6 +142,13 @@ namespace GestionInventario.Models.Repository
                            }).SingleOrDefault();
 
             usuarioView.Sexos = db.Sexo.ToList();
+            usuarioView.Rol = new List<int>();
+            //usuarioView.Rol = db.Rol.Where(x => usuario.Rol.Any(w => w.Codigo == x.Codigo)).Select(x => x.Codigo).ToList();
+            foreach (var item in usuario.Rol)
+            {
+                usuarioView.Rol.Add(item.Codigo);
+            }
+            usuarioView.rols = db.Rol.ToList();
 
             return usuarioView;
         }
@@ -168,19 +188,19 @@ namespace GestionInventario.Models.Repository
                 response.Mensaje = "No se a podido realizar la modificacion " + ex;
                 return response;
             }
-            
-            
 
 
-            
+
+
+
         }
 
-        public ResponseModel DeleteUser(Guid id)
+        public ResponseModel DeleteUser(Guid id, int Activo)
         {
             ResponseModel response = new ResponseModel();
             try
             {
-                
+
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
 
@@ -188,13 +208,26 @@ namespace GestionInventario.Models.Repository
 
                     Usuario usuario = db.Usuario.Where(x => x.Id == id).SingleOrDefault();
 
-                    db.Usuario.Remove(usuario);
-                    db.Persona.Remove(persona);
+                    //db.Usuario.Remove(usuario);
+                    //db.Persona.Remove(persona);
+                    if (Activo == 1)
+                    {
+                        usuario.Activo = true;
+                        response.Mensaje = "Se Activo el usuario correctamente";
+                    }
+                    else
+                    {
+                        response.Mensaje = "Se elimino el usuario correctamente";
+                        usuario.Activo = false;
+                    }
+                    //usuario.Activo = false;
+
+
                     db.SaveChanges();
                     dbContextTransaction.Commit();
 
                     response.Error = false;
-                    response.Mensaje = "Se elimino correctamente";
+                    //response.Mensaje = "Se elimino correctamente";
                 }
 
                 return response;
@@ -204,7 +237,7 @@ namespace GestionInventario.Models.Repository
                 response.Mensaje = "No se pudo eliminar " + ex;
                 return response;
             }
-            
+
         }
 
         public ResponseModel ResetearPass(Guid id)
@@ -231,7 +264,7 @@ namespace GestionInventario.Models.Repository
 
                     envioEmailPass(usuario);
                 }
-                
+
                 return response;
             }
             catch (Exception ex)
@@ -276,16 +309,127 @@ namespace GestionInventario.Models.Repository
             }
         }
 
+        #region Rol
+
+        public Rol GetRol(int Codigo)
+        {
+            Rol rol = db.Rol.Where(x => x.Codigo == Codigo).SingleOrDefault();
+            return rol;
+        }
+
+        public ResponseModel AddRol(Rol rol)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    db.Rol.Add(rol);
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                    response.Error = false;
+                    response.Mensaje = "Se ha creado correctamente el rol";
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = false;
+                response.Mensaje = "Ha ocurrido un error " + ex.Message;
+                return response;
+            }
+
+        }
+
+        public ResponseModel ModificarRol(Rol rol)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    db.Entry(rol).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                }
+                response.Error = false;
+                response.Mensaje = "El rol se ha modificado correctamente";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Mensaje = "No se ha podido modificar el Rol " + ex;
+
+                return response;
+
+            }
+
+        }
+
+        public ResponseModel DeleteRol(int Codigo)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    Rol rol = db.Rol.Where(x => x.Codigo == Codigo).SingleOrDefault();
+                    List<Usuario> usuario = new List<Usuario>();
+
+                    foreach (var item in db.Usuario.ToList())
+                    {
+                        if (item.Rol.Where(x=>x.Codigo == Codigo).Any())
+                        {
+                            usuario.Add(item);
+                        }
+                    }
+                    if (usuario.Any())
+                    {
+                        response.Error = true;
+                        response.Mensaje = "El rol no se puede eliminar porque tiene usuarios asignados";
+                    }
+                    else
+                    {
+                        db.Rol.Remove(db.Rol.Where(x => x.Codigo == Codigo).SingleOrDefault());
+                        db.SaveChanges();
+                        dbContextTransaction.Commit();
+                        response.Error = false;
+                        response.Mensaje = "El rol se ha eliminado correctamente";
+                    }
+
+                }
+                
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Error = true;
+                response.Mensaje = "No se ha podido eliminar el Rol " + ex;
+
+                return response;
+
+            }
+
+        }
+
+
+
+        #endregion
+
 
         public string envioEmailPass(Usuario usuario)
         {
             try
             {
-                
+
                 var asunto = "Contraseña Restablecida";
                 var desc1 = "Su Contraseña ha sido restablecida";
                 var nombreCompleto = usuario.Persona.Nombre;
-               
+
 
                 var body = "<html><body><font face=" + "'Arial'" + "size=" + "'2'>";
                 body +=
@@ -327,7 +471,7 @@ namespace GestionInventario.Models.Repository
                 //emailMessage.Subject = asunto;
                 //emailMessage.Body = body;
                 //emailMessage.Body.BodyType = BodyType.HTML;
-                
+
                 //emailMessage.ToRecipients.Add(usuario.Persona.Email);
 
 

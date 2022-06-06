@@ -1,0 +1,75 @@
+﻿@model GestionInventario.Models.Rol
+<div class="modal-dialog">
+    <div class="modal-content">
+        @using (Html.BeginForm("AddRol", "Usuario", FormMethod.Post, new { id = "AddRol", role = "form" }))
+        {
+            @Html.HiddenFor(x => x.Codigo)
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel" style="text-align:center;"><strong>Agregar Nuevo Rol</strong></h4>
+        </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div><div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" id="btnAgregar" class="btn btn-success"><i class="fa fa-check"></i> GUARDAR <span class="glyphicon glyphicon-arrow-right"></span></button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function ()
+    {
+
+        $("#btnAgregar").click(function (e) {
+            $("#cargaDatosBarra").modal('show');
+            e.preventDefault();            
+            url = "@Url.Action("AddRol", "Usuario")"
+            parametros = $("#AddRol").serialize();
+            $.post(url, parametros, function (response) {
+                if (response.Error) {                    
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatosBarra").modal('hide');
+                    }
+                    function carga() {
+                        $('#cargarMensajes').modal('hide');
+                    }
+                    @*document.location.href = "@Url.Action("Add","Usuario")"*@
+                }
+                else {
+                    console.log("entro al else")
+                    setTimeout(bajaModal, 1000);
+                    setTimeout(carga, 4000);
+                    //setTimeout(redireccionar, 1000)
+                    function bajaModal() {
+                        $('#cargarMensajes').modal('show');
+                        $('#mensajeLoad').html(response.Mensaje);
+                        $("#cargaDatos").modal('hide');
+                    }
+                    function carga() {
+                        $("#modificarProducto").modal('hide');
+                        document.location.href = "@Url.Action("Rol","Usuario")"
+                    }
+
+
+                }
+            })
+        });
+    });
+
+</script>
