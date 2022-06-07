@@ -57,13 +57,20 @@ namespace GestionInventario.Models.Repository
                             db.Inventario.Add(inventario);
                             db.SaveChanges();
                             dbContextTransaction.Commit();
+
+                            response.Error = false;
+                            response.Mensaje = "Producto se a guardado correctamente";
                         }
+                    }
+                    else
+                    {
+                        response.Error = true;
+                        response.Mensaje = "Se a producido un error al guardar el producto";
                     }
                     
                         
                 }
-                response.Error = false;
-                response.Mensaje = "Producto se a guardado correctamente";
+                
                 return response;
             }
             catch (Exception ex)
