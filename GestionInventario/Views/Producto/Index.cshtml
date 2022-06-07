@@ -109,6 +109,7 @@
                 success: function (response) {
                     $("#modificarProducto").html(response);
                     $("#modificarProducto").modal('show');
+                    $("#cargaDatosBarra").modal('hide');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);

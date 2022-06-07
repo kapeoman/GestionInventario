@@ -78,10 +78,10 @@
     </div>
     <div class="form-group">
         @*<div class="btn-group" data-toggle="buttons">*@
-        @for (var x1 = 0; x1 <= Model.rols.Count() - 1; x1++)
+        @for (var x1 = 0; x1 <= (Model.rols.Count() - 1); x1++)
         {
             <div id="@Model.rols[x1].Codigo" class="col-md-offset-2 col-md-10">
-                <input id="RolList[@x1]" type="checkbox" name="RolList[@x1]" value=@Model.rols[x1].Codigo checked="@Model.Rol[x1] == @Model.rols[x1].Codigo ? true : false" >
+                <input id="RolList[@x1]" type="checkbox" name="RolList[@x1]" value=@Model.rols[x1].Codigo checked="@(Model.Rol.Contains(@Model.rols[x1].Codigo)? true : false)" >
                 @Model.rols[x1].Nombre
             </div>}
         @*</div>*@

@@ -146,6 +146,9 @@
       <End Role="Producto" EntitySet="Producto" />
       <End Role="Inventario" EntitySet="Inventario" />
     </AssociationSet>
+    <FunctionImport Name="fnUsuarioRol" IsComposable="true" ReturnType="Collection(GestionInventarioModel.fnUsuarioRol_Result)">
+      <Parameter Name="Codigo" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -279,4 +282,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="fnUsuarioRol_Result">
+    <Property Type="Guid" Name="IdUsuario" Nullable="true" />
+    <Property Type="Int32" Name="Codigo" Nullable="true" />
+  </ComplexType>
 </Schema>

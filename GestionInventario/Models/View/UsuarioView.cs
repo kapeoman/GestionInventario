@@ -33,7 +33,12 @@ namespace GestionInventario.Models.View
         public List<Sexo> Sexos { get; set; } 
         public List<Rol> rols { get; set; }
 
-
-
+        
+        public UsuarioView()
+        {
+            Rol = new List<int>();
+        }
     }
+    
+
 }

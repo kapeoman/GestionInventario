@@ -162,6 +162,9 @@ namespace GestionInventario.Models.Repository
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
                     Persona persona = db.Persona.Where(x => x.Id == usuarioView.Id).SingleOrDefault();
+                    Usuario usuario = db.Usuario.Where(x => x.Id == usuarioView.Id).SingleOrDefault();
+
+                    List<Rol> rols = db.Rol.Where(x => usuarioView.Rol.Any(w => w == x.Codigo)).ToList();
 
                     persona.RunCuerpo = usuarioView.RutCuerpo;
                     persona.RunDigito = usuarioView.RutDigito;
@@ -172,6 +175,15 @@ namespace GestionInventario.Models.Repository
                     persona.Email = usuarioView.Email;
                     persona.SexoCodigo = short.Parse(usuarioView.Sexo.ToString());
 
+                    usuario.Rol.Clear();
+                    foreach (var item in rols)
+                    {
+                        usuario.Rol.Add(item);
+                    }
+
+
+
+                    db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                     db.Entry(persona).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     dbContextTransaction.Commit();
@@ -374,19 +386,22 @@ namespace GestionInventario.Models.Repository
             ResponseModel response = new ResponseModel();
             try
             {
+                
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
                     Rol rol = db.Rol.Where(x => x.Codigo == Codigo).SingleOrDefault();
                     List<Usuario> usuario = new List<Usuario>();
 
-                    foreach (var item in db.Usuario.ToList())
-                    {
-                        if (item.Rol.Where(x=>x.Codigo == Codigo).Any())
-                        {
-                            usuario.Add(item);
-                        }
-                    }
-                    if (usuario.Any())
+                    List<fnUsuarioRol_Result> prueba = db.fnUsuarioRol(Codigo).ToList();
+
+                    //foreach (var item in db.Usuario.ToList())
+                    //{
+                    //    if (item.Rol.Where(x => x.Codigo == Codigo).Any())
+                    //    {
+                    //        usuario.Add(item);
+                    //    }
+                    //}
+                    if (prueba.Count >= 1)
                     {
                         response.Error = true;
                         response.Mensaje = "El rol no se puede eliminar porque tiene usuarios asignados";
@@ -437,7 +452,7 @@ namespace GestionInventario.Models.Repository
                          desc1 + "</div>" + "<br><br>" +
                         "<div style=" + "'margin-left: 0px;'>" +
                         "<strong>Estimad@ " + nombreCompleto + "</ strong>" + "<br>" +
-                        "Junto con saludar, le informo que se a restablecido su contraseña <br>" +
+                        "Junto con saludar, le informo que se ha restablecido su contraseña <br>" +
                         "<strong>Usuario: </strong>" + usuario.Persona.RunCuerpo + "-" + usuario.Persona.RunDigito + "<br>" +
                         "<strong>Contraseña: </strong>" + usuario.Password + "<br>";
 

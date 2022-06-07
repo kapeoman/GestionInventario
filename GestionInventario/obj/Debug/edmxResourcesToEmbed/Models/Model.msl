@@ -148,5 +148,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="fnUsuarioRol" FunctionName="GestionInventarioModel.Store.fnUsuarioRol">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestionInventarioModel.fnUsuarioRol_Result">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

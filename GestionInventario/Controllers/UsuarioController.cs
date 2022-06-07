@@ -59,22 +59,16 @@ namespace GestionInventario.Controllers
                 
                 for (int i = 0; i < metodoUsuario.ListaRoles().Count; i++)
                 {
-                    var rol = int.Parse(Request.Form["RolList[" + i + "]"].ToString());
-                    usuarioView.Rol.Add(rol);
+                    if (Request.Form["RolList[" + i + "]"] != null)
+                    {
+                        var rol = int.Parse(Request.Form["RolList[" + i + "]"].ToString());
+                        usuarioView.Rol.Add(rol);
+                    }
                 }
 
                 response = metodoUsuario.AddUser(usuarioView);
-                if (response.Error == false)
-                {
-                    //ViewBag.Mensaje = response.Mensaje;
-                    return Json(response);
-                }
-                else
-                {
-                    //ViewBag.Mensaje = estado.Mensaje;
-                    //usuarioView.Sexos = metodoUsuario.ListaSexo();
-                    return Json(response);
-                }
+                return Json(response);
+                
                 
             }
             //UsuarioView usuarioView = new UsuarioView();
@@ -94,7 +88,16 @@ namespace GestionInventario.Controllers
         }
         [HttpPost]
         public ActionResult modificar(UsuarioView usuarioView)
-        {
+        {            
+            for (int i = 0; i < metodoUsuario.ListaRoles().Count; i++)
+            {
+                if (Request.Form["RolList[" + i + "]"] != null)
+                {
+                    var rol = int.Parse(Request.Form["RolList[" + i + "]"].ToString());
+                    usuarioView.Rol.Add(rol);
+                }
+                
+            }
             var response = metodoUsuario.ModificarUser(usuarioView);
             return Json(response);
         }

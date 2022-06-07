@@ -140,5 +140,15 @@ namespace GestionInventario.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        [DbFunction("GestionInventarioEntities", "fnUsuarioRol")]
+        public virtual IQueryable<fnUsuarioRol_Result> fnUsuarioRol(Nullable<int> codigo)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnUsuarioRol_Result>("[GestionInventarioEntities].[fnUsuarioRol](@Codigo)", codigoParameter);
+        }
     }
 }
