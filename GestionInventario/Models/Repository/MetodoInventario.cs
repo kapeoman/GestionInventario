@@ -109,11 +109,17 @@ namespace GestionInventario.Models.Repository
                         {
                             response.Error = true;
                             response.Mensaje = "Se ha producido un error ";
-                            return response;
+                            
 
                         }
                     }
+                    else
+                    {
+                        response.Error = true;
+                        response.Mensaje = "Se ha producido un error ";
+                    }
                     
+
                     //inventario.Stock = inventarioNew.Stock;
 
                     //db.SaveChanges();
@@ -168,7 +174,7 @@ namespace GestionInventario.Models.Repository
                         StockAnterior = inventarioHistorico.StockNuevo,
                         StockNuevo = inventario.Stock,
                         PrecioUnitario = inventario.Producto.precioUnitario.Value,
-                        Ingreso = inventarioHistorico.StockNuevo < inventarioHistorico.StockAnterior ? false : true,
+                        Ingreso = inventarioHistorico.StockNuevo < inventario.Stock ? false : true,
                         UsuarioId = oUser.Id,
                     });
                     db.InventarioHistorico.Add(inventarioHistoricoNew);
