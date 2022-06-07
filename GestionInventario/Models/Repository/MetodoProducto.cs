@@ -75,12 +75,31 @@ namespace GestionInventario.Models.Repository
             {
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
-                    db.Entry(productoNew).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    dbContextTransaction.Commit();
+                    Producto producto = db.Producto.Where(x => x.Codigo == productoNew.Codigo).SingleOrDefault();
+
+                    if (productoNew.precioUnitario >= 0 && productoNew.minimo >= 0 && productoNew.maximo >= 0)
+                    {
+                        producto.nombre = productoNew.nombre;
+                        producto.minimo = productoNew.minimo;
+                        producto.maximo = productoNew.maximo;
+                        
+
+                        db.Entry(productoNew).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        dbContextTransaction.Commit();
+                        response.Error = false;
+                        response.Mensaje = "Se ha modificado correctamente el producto";
+                    }
+                    else
+                    {
+                        response.Error = true;
+                        response.Mensaje = "Ocurrio un error ";
+                    }
+
+                    
                 }
-                response.Error = false;
-                response.Mensaje = "Se ha modificado correctamente el producto";
+                //response.Error = false;
+                //response.Mensaje = "Se ha modificado correctamente el producto";
                 return response;
             }
             catch (Exception ex)
