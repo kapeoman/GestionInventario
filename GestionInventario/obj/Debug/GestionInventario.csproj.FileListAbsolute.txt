@@ -189,4 +189,3 @@ C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\Ge
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.csproj.CopyComplete
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.dll
 C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.pdb
-C:\Users\Keno\Documents\ProyectoTitulo\GestionInventarioGIT\GestionInventario\GestionInventario\obj\Debug\GestionInventario.csproj.AssemblyReference.cache

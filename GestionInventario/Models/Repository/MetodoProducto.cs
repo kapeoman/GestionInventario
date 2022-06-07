@@ -84,7 +84,7 @@ namespace GestionInventario.Models.Repository
                         producto.maximo = productoNew.maximo;
                         
 
-                        db.Entry(productoNew).State = System.Data.Entity.EntityState.Modified;
+                        db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         dbContextTransaction.Commit();
                         response.Error = false;
