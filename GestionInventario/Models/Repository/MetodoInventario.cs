@@ -174,7 +174,7 @@ namespace GestionInventario.Models.Repository
                         StockAnterior = inventarioHistorico.StockNuevo,
                         StockNuevo = inventario.Stock,
                         PrecioUnitario = inventario.Producto.precioUnitario.Value,
-                        Ingreso = inventarioHistorico.StockNuevo < inventario.Stock ? false : true,
+                        Ingreso = inventarioHistorico.StockNuevo < inventario.Stock ? true : false,
                         UsuarioId = oUser.Id,
                     });
                     db.InventarioHistorico.Add(inventarioHistoricoNew);
