@@ -89,28 +89,31 @@ namespace GestionInventario.Models.Repository
             {
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
-                    inventarioNew.Producto = db.Producto.Where(x => x.Codigo == inventarioNew.CodigoProducto).SingleOrDefault();
-                    Inventario inventario = db.Inventario.Where(x => x.Codigo == inventarioNew.Codigo).SingleOrDefault();
-                    inventarioNew.CodigoProducto = inventario.CodigoProducto;
-                    inventarioNew.Producto = db.Producto.Where(x => x.Codigo == inventario.CodigoProducto).SingleOrDefault();
-                    if (SaveInventarioHistorico(inventarioNew))
+                    if (inventarioNew.Stock >= 0)
                     {
-                        inventario.Stock = inventarioNew.Stock;
+                        inventarioNew.Producto = db.Producto.Where(x => x.Codigo == inventarioNew.CodigoProducto).SingleOrDefault();
+                        Inventario inventario = db.Inventario.Where(x => x.Codigo == inventarioNew.Codigo).SingleOrDefault();
+                        inventarioNew.CodigoProducto = inventario.CodigoProducto;
+                        inventarioNew.Producto = db.Producto.Where(x => x.Codigo == inventario.CodigoProducto).SingleOrDefault();
+                        if (SaveInventarioHistorico(inventarioNew))
+                        {
+                            inventario.Stock = inventarioNew.Stock;
 
-                        db.SaveChanges();
-                        dbContextTransaction.Commit();
+                            db.SaveChanges();
+                            dbContextTransaction.Commit();
 
-                        response.Error = false;
-                        response.Mensaje = "Se ha Guardado el stock correctamente";
+                            response.Error = false;
+                            response.Mensaje = "Se ha Guardado el stock correctamente";
+                        }
+                        else
+                        {
+                            response.Error = true;
+                            response.Mensaje = "Se ha producido un error ";
+                            return response;
+
+                        }
                     }
-                    else
-                    {
-                        response.Error = true;
-                        response.Mensaje = "Se ha producido un error ";
-                        return response;
-
-                    }
-
+                    
                     //inventario.Stock = inventarioNew.Stock;
 
                     //db.SaveChanges();

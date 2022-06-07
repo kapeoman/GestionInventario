@@ -40,19 +40,27 @@ namespace GestionInventario.Models.Repository
             {
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
-                    producto.Eliminado = false;
-                    db.Producto.Add(producto);
-                    Inventario inventario = (new Inventario
+                    if (!db.Producto.Where(x=>x.nombre == producto.nombre).Any())
                     {
-                        CodigoProducto = producto.Codigo,
-                        Producto = producto,
-                        Stock = 0,
-                        Eliminado = false,
+                        if (producto.precioUnitario >= 0 && producto.minimo >= 0 && producto.maximo >= 0)
+                        {
+                            producto.Eliminado = false;
+                            db.Producto.Add(producto);
+                            Inventario inventario = (new Inventario
+                            {
+                                CodigoProducto = producto.Codigo,
+                                Producto = producto,
+                                Stock = 0,
+                                Eliminado = false,
 
-                    });
-                    db.Inventario.Add(inventario);
-                    db.SaveChanges();
-                    dbContextTransaction.Commit();
+                            });
+                            db.Inventario.Add(inventario);
+                            db.SaveChanges();
+                            dbContextTransaction.Commit();
+                        }
+                    }
+                    
+                        
                 }
                 response.Error = false;
                 response.Mensaje = "Producto se a guardado correctamente";
