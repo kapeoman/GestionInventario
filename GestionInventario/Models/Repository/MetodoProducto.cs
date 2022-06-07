@@ -82,6 +82,7 @@ namespace GestionInventario.Models.Repository
                         producto.nombre = productoNew.nombre;
                         producto.minimo = productoNew.minimo;
                         producto.maximo = productoNew.maximo;
+                        producto.precioUnitario = productoNew.precioUnitario;
                         
 
                         db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
