@@ -313,7 +313,7 @@ namespace GestionInventario.Models.Repository
             //encabezados tabla de datos
 
             sheet.Cells[1, 1, 1, columnaFinal].Merge = true;
-            sheet.Cells[1, 1].Value = "Informe Historico";
+            sheet.Cells[1, 1].Value = "Informe Producto";
             sheet.Cells[1, 1].Style.Font.Size = 14;
             sheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
