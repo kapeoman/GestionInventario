@@ -146,7 +146,7 @@ namespace GestionInventario.Models.Repository
                 //using (var dbContextTransaction = db.Database.BeginTransaction())
                 //{                
 
-                InventarioHistorico inventarioHistorico = db.InventarioHistorico.Where(x => x.CodigoInventario == inventario.Codigo).OrderByDescending(x => x.Fecha).SingleOrDefault();
+                InventarioHistorico inventarioHistorico = db.InventarioHistorico.Where(x => x.CodigoInventario == inventario.Codigo).OrderByDescending(x => x.Fecha).FirstOrDefault();
                 if (inventarioHistorico == null)
                 {
                     inventarioHistorico = new InventarioHistorico();
