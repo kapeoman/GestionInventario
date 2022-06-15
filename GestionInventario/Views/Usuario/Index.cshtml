@@ -63,9 +63,9 @@
                                data-placement="left" data-toggle="tooltip" data-original-title="">
                                 <span class="fa fa-edit fa-1x"> </span>
                             </a>
-                            <a id="btnDelete" onclick="eliminar('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Eliminar"
+                            <a id="btnDelete" onclick="eliminar('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Deshabilitar"
                                data-placement="left" data-toggle="tooltip" data-original-title="">
-                                <span class="fa fa-trash fa-1x"> </span>
+                                <span class="fa fa-hand-o-down fa-1x"> </span>
                             </a>
                             <a id="btnDelete" onclick="resetearPass('@item.Id.ToString()')" class="btn btn-outline btn-danger btn-xs newTooltip" title="Restablecer Pass"
                                data-placement="left" data-toggle="tooltip" data-original-title="">
@@ -144,7 +144,7 @@
 
 
         function eliminar(Id) {
-            if (confirm("Esta seguro que desea eliminar???")) {
+            if (confirm("Esta seguro que desea Deshabilitar al usuario???")) {
                 $("#cargaDatosBarra").modal('show');
                 var Activo = 2;
                 //var url = "Url.Content("~/Usuario/Delete")" + "/" + Id + "/" + Activo;

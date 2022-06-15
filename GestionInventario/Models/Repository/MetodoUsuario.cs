@@ -229,7 +229,7 @@ namespace GestionInventario.Models.Repository
                     }
                     else
                     {
-                        response.Mensaje = "Se elimino el usuario correctamente";
+                        response.Mensaje = "Se Dehabilito el usuario correctamente";
                         usuario.Activo = false;
                     }
                     //usuario.Activo = false;

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using GestionInventario.Models;
 using GestionInventario.Models.View;
@@ -104,6 +106,11 @@ namespace GestionInventario.Models.Repository
 
                             response.Error = false;
                             response.Mensaje = "Se ha Guardado el stock correctamente";
+                            Producto producto = db.Producto.Where(x=>x.Codigo == inventario.CodigoProducto).SingleOrDefault();
+                            if (inventario.Stock <= producto.minimo)
+                            {
+                                envioEmailStock(inventario, producto);
+                            }
                         }
                         else
                         {
@@ -137,6 +144,60 @@ namespace GestionInventario.Models.Repository
                 return response;
             }
         }
+
+
+        public string envioEmailStock(Inventario inventario, Producto producto)
+        {
+            try
+            {
+                
+                var asunto = "Aviso De Stock";
+                //var desc1 = "Su Contraseña ha sido restablecida";
+                //var nombreCompleto = usuario.Persona.Nombre;
+
+
+                var body = "<html><body><font face=" + "'Arial'" + "size=" + "'2'>";
+                body +=
+                    "<div style=" + "'color:#008272;font-size:36px;font-family:SegoeUI;text-align:center;margin:0;padding:0;line-height:48px;letter-spacing:0.5px;font-style: initial;'>" +
+                        "</div>" + "<br><br>" +
+                        "<div style=" + "'margin-left: 0px;'>" +
+                        "<strong>Estimad@ Administrador </ strong>" + "<br>" +
+                        "Junto con saludar, le informo que se ha producido un aviso de Stock del producto " + producto.nombre + " <br>" +
+                        "<strong>Stock Actual: </strong>" + inventario.Stock + "<br>"+
+                        "<strong>Stock Minimo: </strong>" + producto.minimo + "<br>";
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("gestion.test.2020@gmail.com");
+                mail.To.Add(new MailAddress("keno.23.91@gmail.com"));
+                mail.Subject = asunto;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+                mail.Priority = MailPriority.Normal;
+
+                SmtpClient smtpClient = new SmtpClient();
+
+                smtpClient.Host = "smtp.gmail.com";
+                smtpClient.Port = 587;
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+
+                NetworkCredential usercredential = new NetworkCredential("gestion.test.2020@gmail.com", "zejvhtbwtjayfmyo");
+
+                //zejvhtbwtjayfmyo
+
+                smtpClient.Credentials = usercredential;
+                smtpClient.Send(mail);
+                
+
+                return "CORREO ENVIADO CORRECTAMENTE";
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message.Contains("401") ? "NO SE PUDO ENVIAR EL CORREO: VERIFIQUE LAS CREDENCIALES DEL EMISOR DE CORREOS EN CONFIGURACION DE CUENTA" : ex.Message;
+                return error;
+            }
+        }
+
 
         public bool SaveInventarioHistorico(Inventario inventario)
         {
